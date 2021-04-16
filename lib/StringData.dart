@@ -1,0 +1,9 @@
+const String titleOne = "Analysis";
+const String titleTwo = "Mentor";
+const String titleThree = "Live broadcast";
+const String descriptionOne = "we will provide analysts";
+const String descriptionTwo = "we have best mentors to guide you";
+const String descriptionThree = "we have live sessions";
+const String imageOne = "analyst.png";
+const String imageTwo = "mentor.png";
+const String imageThree = "live.png";
