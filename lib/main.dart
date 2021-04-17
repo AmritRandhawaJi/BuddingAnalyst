@@ -18,16 +18,16 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    getData();
   }
 
   @override
   Widget build(BuildContext context) {
+    int index = 0;
     return MaterialApp(
       home: Scaffold(
           body: SafeArea(
-            child: Column(
-        children: [
+        child: Column(
+          children: [
             Padding(
               padding: const EdgeInsets.all(18.0),
               child: Text(
@@ -37,58 +37,49 @@ class _MyAppState extends State<MyApp> {
                 ),
               ),
             ),
-            Expanded(child: PageViewAdaptor()),
-
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [Buttons("Back"), Buttons("Next")],
+            Expanded(
+                child: PageView(
+              onPageChanged: (value) {
+                setState(() {
+                  index = value;
+                });
+              },
+              children: [
+                Center(
+                    child: PageViewContent(titleOne, imageOne, descriptionOne)),
+                Center(
+                    child: PageViewContent(titleTwo, imageTwo, descriptionTwo)),
+                Center(
+                    child: PageViewContent(
+                        titleThree, imageThree, descriptionThree))
+              ],
+            )),
+            Column(
+              children: [
+                MaterialButton(
+                    onPressed: () {
+                      PageController().animateToPage(index++,
+                          duration: Duration(milliseconds: 250),
+                          curve: Curves.bounceOut);
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text(
+                          "Next",
+                          style: TextStyle(color: Colors.black, fontSize: 18.0),
+                        ),
+                        Icon(
+                          Icons.arrow_right_alt,
+                          color: Colors.black,
+                        )
+                      ],
+                    ),elevation: 5.0,height: 30,)
+              ],
             )
-        ],
-      ),
-          )),
-    );
-  }
-
-  getData() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-  }
-}
-
-class Buttons extends StatelessWidget {
-  Buttons(this.buttonName);
-
-  final String buttonName;
-
-  @override
-  Widget build(BuildContext context) {
-    final screenSize = MediaQuery.of(context);
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: MaterialButton(
-          onPressed: () {},
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(20.0))),
-          elevation: 5.0,
-          minWidth: screenSize.size.width/3,
-          height: 35,
-          color: Colors.blue,
-          child: new Text(buttonName,
-              style: new TextStyle(fontSize: 16.0, color: Colors.white))),
-    );
-  }
-}
-
-class PageViewAdaptor extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final screenSize = MediaQuery.of(context);
-    return PageView(
-      children: [
-
-        Center(child: PageViewContent(titleOne, imageOne, descriptionOne)),
-        Center(child: PageViewContent(titleTwo, imageTwo, descriptionTwo)),
-        Center(child: PageViewContent(titleThree, imageThree, descriptionThree))
-      ],
+          ],
+        ),
+      )),
     );
   }
 }
@@ -103,24 +94,15 @@ class PageViewContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context);
-    return Expanded(
-      child: Container(
-        child: Column(
-          children: [
-            Text(this.title),
-
-            Expanded(
-              child: Image.asset(
-                "assets/$image",
-                width: screenSize.size.width / 1.5,
-                height: screenSize.size.height / 1.5,
-              ),
-            ),
-
-            Text(this.description)
-          ],
-        ),
-      ),
+    return Column(
+      children: [
+        Text(this.title),
+        Expanded(
+            child: Image(
+          image: AssetImage("assets/$image"),
+        )),
+        Text(this.description)
+      ],
     );
   }
 }
