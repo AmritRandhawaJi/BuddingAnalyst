@@ -1,8 +1,13 @@
+import 'dart:io';
+
 import 'package:budding_analyst/PageViewModel.dart';
 import 'package:budding_analyst/SlideItem.dart';
+import 'package:budding_analyst/screens/Signup.dart';
 import 'package:budding_analyst/widgets/SlideDots.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import 'LoginScreen.dart';
 
 class GettingStartedScreen extends StatefulWidget {
   @override
@@ -28,47 +33,65 @@ class _GettingStartedScreenState extends State<GettingStartedScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: PageView.builder(
-        controller: _pageController,
-        onPageChanged: _onPageChanged,
-        itemCount: slideList.length,
-        itemBuilder: (ctx, i) => SlideItem(i),
-      ),
+        body: SafeArea(
+          child: Container(
+            child: PageView.builder(
+              controller: _pageController,
+              onPageChanged: _onPageChanged,
+              itemCount: slideList.length,
+              itemBuilder: (ctx, i) => SlideItem(i),
+            ),
+          ),
+        ),
         bottomSheet: _currentPage != slideList.length - 1
-            ? Container(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    TextButton(onPressed: () {}, child: Text("Skip")),
-                    Container(
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          for (int i = 0; i < slideList.length; i++)
-                            if (i == _currentPage)
-                              SlideDots(true)
-                            else
-                              SlideDots(false)
-                        ],
+            ? Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Container(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      TextButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => LoginScreen()));
+                          },
+                          child: Text("Skip",style: TextStyle(color: Colors.black),)),
+                      Container(
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            for (int i = 0; i < slideList.length; i++)
+                              if (i == _currentPage)
+                                SlideDots(true)
+                              else
+                                SlideDots(false)
+                          ],
+                        ),
                       ),
-                    ),
-                    TextButton(
-                        onPressed: () {
-                          _pageController.animateToPage(_currentPage + 1,
-                              duration: Duration(milliseconds: 250),
-                              curve: Curves.easeIn);
-                        },
-                        child: Text("Next")),
-                  ],
+                      TextButton(
+                          onPressed: () {
+                            _pageController.animateToPage(_currentPage + 1,
+                                duration: Duration(milliseconds: 250),
+                                curve: Curves.easeIn);
+                          },
+                          child: Row(
+                            children: [
+                              Text("Next",style: TextStyle(color: Colors.black),),
+                              Icon(Icons.arrow_forward_rounded,color: Colors.black,)
+                            ],
+                          )),
+                    ],
+                  ),
                 ),
-              )
-            : Container(
-                width: MediaQuery.of(context).size.width,
-                height: 200,
-                color: Theme.of(context).accentColor,
-                child: Center(child: Text("Get started",style: TextStyle(color: Colors.white,fontSize: 18),)),
-              ),
-    );
+            )
+            : MaterialButton(onPressed: (){
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => SignupScreen()));
+    },child: Text("Get started",style: TextStyle(color: Colors.white),),height: Platform.isIOS ? 60.0: 50,minWidth: MediaQuery.of(context).size.width,color: Colors.indigoAccent,));
   }
 }

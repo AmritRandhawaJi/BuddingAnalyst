@@ -1,4 +1,3 @@
-
 import 'package:budding_analyst/screens/GettingStarted.dart';
 import 'package:budding_analyst/screens/LoginScreen.dart';
 import 'package:budding_analyst/screens/Signup.dart';
@@ -7,14 +6,10 @@ import 'package:flutter/services.dart';
 
 import 'package:flutter/widgets.dart';
 
-
-
-
 void main() {
-  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
-      .then((_) {
+
     runApp(MyApp());
-  });
+
 }
 
 class MyApp extends StatelessWidget {
@@ -22,6 +17,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: GettingStartedScreen(),
       routes: {
         LoginScreen.routeName: (ctx) => LoginScreen(),
@@ -29,5 +25,4 @@ class MyApp extends StatelessWidget {
       },
     );
   }
-
 }
