@@ -51,93 +51,95 @@ class _GettingStartedScreenState extends State<GettingStartedScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        color: Colors.white,
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            children: <Widget>[
-              Text("Budding",style: TextStyle(fontFamily: "Trocchi",fontSize: 24),),
-              Text("Analyst",style: TextStyle(fontFamily: "Trocchi",fontSize: 20),),
-              Expanded(
-                child: Stack(
-                  alignment: AlignmentDirectional.bottomCenter,
-                  children: <Widget>[
-                    PageView.builder(
-                      scrollDirection: Axis.horizontal,
-                      controller: _pageController,
-                      onPageChanged: _onPageChanged,
-                      itemCount: slideList.length,
-                      itemBuilder: (ctx, i) => SlideItem(i),
-                    ),
-                    Stack(
-                      alignment: AlignmentDirectional.topStart,
-                      children: <Widget>[
-                        Container(
-                          margin: const EdgeInsets.only(bottom: 35),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              for(int i = 0; i<slideList.length; i++)
-                                if( i == _currentPage )
-                                  SlideDots(true)
-                                else
-                                  SlideDots(false)
-                            ],
-                          ),
-                        )
-                      ],
-                    )
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  MaterialButton(
-                    child: Text(
-                      'Getting Started',
-                      style: TextStyle(
-                        fontSize: 18,
-                      ),
-                    ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    padding: const EdgeInsets.all(15),
-                    color: Theme.of(context).primaryColor,
-                    textColor: Colors.white,
-                    onPressed: () {
-                      Navigator.of(context).pushNamed(SignupScreen.routeName);
-                    },
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+      body: SafeArea(
+        child: Container(
+          color: Colors.white,
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              children: <Widget>[
+                Text("Budding",style: TextStyle(fontFamily: "Trocchi",fontSize: 24),),
+                Text("Analyst",style: TextStyle(fontFamily: "Trocchi",fontSize: 20),),
+                Expanded(
+                  child: Stack(
+                    alignment: AlignmentDirectional.bottomCenter,
                     children: <Widget>[
-                      Text(
-                        'Have an account?',
+                      PageView.builder(
+                        scrollDirection: Axis.horizontal,
+                        controller: _pageController,
+                        onPageChanged: _onPageChanged,
+                        itemCount: slideList.length,
+                        itemBuilder: (ctx, i) => SlideItem(i),
+                      ),
+                      Stack(
+                        alignment: AlignmentDirectional.topStart,
+                        children: <Widget>[
+                          Container(
+                            margin: const EdgeInsets.only(bottom: 35),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                for(int i = 0; i<slideList.length; i++)
+                                  if( i == _currentPage )
+                                    SlideDots(true)
+                                  else
+                                    SlideDots(false)
+                              ],
+                            ),
+                          )
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    MaterialButton(
+                      child: Text(
+                        'Getting Started',
                         style: TextStyle(
                           fontSize: 18,
                         ),
                       ),
-                      MaterialButton(
-                        child: Text(
-                          'Login',
-                          style: TextStyle(fontSize: 18),
-                        ),
-                        onPressed: () {
-                          Navigator.of(context).pushNamed(LoginScreen.routeName);
-                        },
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5),
                       ),
-                    ],
-                  ),
-                ],
-              )
-            ],
+                      padding: const EdgeInsets.all(15),
+                      color: Theme.of(context).primaryColor,
+                      textColor: Colors.white,
+                      onPressed: () {
+                        Navigator.of(context).pushNamed(SignupScreen.routeName);
+                      },
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          'Have an account?',
+                          style: TextStyle(
+                            fontSize: 18,
+                          ),
+                        ),
+                        MaterialButton(
+                          child: Text(
+                            'Login',
+                            style: TextStyle(fontSize: 18),
+                          ),
+                          onPressed: () {
+                            Navigator.of(context).pushNamed(LoginScreen.routeName);
+                          },
+                        ),
+                      ],
+                    ),
+                  ],
+                )
+              ],
+            ),
           ),
         ),
       ),
