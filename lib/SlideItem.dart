@@ -14,7 +14,7 @@ mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
 
-       Container(width: screenSize.size.width/1.5,child: Image.asset(slideList[index].image)),
+       Container(width: screenSize.size.width/4,child: Image.asset(slideList[index].image)),
 
 
         Text(

@@ -1,13 +1,8 @@
-import 'dart:async';
-
 import 'package:budding_analyst/PageViewModel.dart';
 import 'package:budding_analyst/SlideItem.dart';
 import 'package:budding_analyst/widgets/SlideDots.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import 'LoginScreen.dart';
-import 'Signup.dart';
-
 
 class GettingStartedScreen extends StatefulWidget {
   @override
@@ -17,24 +12,6 @@ class GettingStartedScreen extends StatefulWidget {
 class _GettingStartedScreenState extends State<GettingStartedScreen> {
   int _currentPage = 0;
   final PageController _pageController = PageController(initialPage: 0);
-
-  @override
-  void initState() {
-    super.initState();
-    Timer.periodic(Duration(seconds: 8), (Timer timer) {
-      if (_currentPage < 2) {
-        _currentPage++;
-      } else {
-        _currentPage = 0;
-      }
-
-      _pageController.animateToPage(
-        _currentPage,
-        duration: Duration(milliseconds: 300),
-        curve: Curves.easeIn,
-      );
-    });
-  }
 
   @override
   void dispose() {
@@ -51,98 +28,47 @@ class _GettingStartedScreenState extends State<GettingStartedScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Container(
-          color: Colors.white,
-          child: Padding(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              children: <Widget>[
-                Text("Budding",style: TextStyle(fontFamily: "Trocchi",fontSize: 24),),
-                Text("Analyst",style: TextStyle(fontFamily: "Trocchi",fontSize: 20),),
-                Expanded(
-                  child: Stack(
-                    alignment: AlignmentDirectional.bottomCenter,
-                    children: <Widget>[
-                      PageView.builder(
-                        scrollDirection: Axis.horizontal,
-                        controller: _pageController,
-                        onPageChanged: _onPageChanged,
-                        itemCount: slideList.length,
-                        itemBuilder: (ctx, i) => SlideItem(i),
-                      ),
-                      Stack(
-                        alignment: AlignmentDirectional.topStart,
-                        children: <Widget>[
-                          Container(
-                            margin: const EdgeInsets.only(bottom: 35),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                for(int i = 0; i<slideList.length; i++)
-                                  if( i == _currentPage )
-                                    SlideDots(true)
-                                  else
-                                    SlideDots(false)
-                              ],
-                            ),
-                          )
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    MaterialButton(
-                      child: Text(
-                        'Getting Started',
-                        style: TextStyle(
-                          fontSize: 18,
-                        ),
-                      ),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      padding: const EdgeInsets.all(15),
-                      color: Theme.of(context).primaryColor,
-                      textColor: Colors.white,
-                      onPressed: () {
-                        Navigator.of(context).pushNamed(SignupScreen.routeName);
-                      },
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text(
-                          'Have an account?',
-                          style: TextStyle(
-                            fontSize: 18,
-                          ),
-                        ),
-                        MaterialButton(
-                          child: Text(
-                            'Login',
-                            style: TextStyle(fontSize: 18),
-                          ),
-                          onPressed: () {
-                            Navigator.of(context).pushNamed(LoginScreen.routeName);
-                          },
-                        ),
-                      ],
-                    ),
-                  ],
-                )
-              ],
-            ),
-          ),
-        ),
+      body: PageView.builder(
+        controller: _pageController,
+        onPageChanged: _onPageChanged,
+        itemCount: slideList.length,
+        itemBuilder: (ctx, i) => SlideItem(i),
       ),
+        bottomSheet: _currentPage != slideList.length - 1
+            ? Container(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TextButton(onPressed: () {}, child: Text("Skip")),
+                    Container(
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          for (int i = 0; i < slideList.length; i++)
+                            if (i == _currentPage)
+                              SlideDots(true)
+                            else
+                              SlideDots(false)
+                        ],
+                      ),
+                    ),
+                    TextButton(
+                        onPressed: () {
+                          _pageController.animateToPage(_currentPage + 1,
+                              duration: Duration(milliseconds: 250),
+                              curve: Curves.easeIn);
+                        },
+                        child: Text("Next")),
+                  ],
+                ),
+              )
+            : Container(
+                width: MediaQuery.of(context).size.width,
+                height: 200,
+                color: Theme.of(context).accentColor,
+                child: Center(child: Text("Get started",style: TextStyle(color: Colors.white,fontSize: 18),)),
+              ),
     );
   }
 }

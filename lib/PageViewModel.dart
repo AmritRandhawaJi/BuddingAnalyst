@@ -1,4 +1,5 @@
 
+
 class Slide{
 
 String title;
@@ -14,3 +15,5 @@ final slideList = [
   Slide(title: "Live Stream", description: "Live stream across the world", image: "assets/live.png"),
 
 ];
+
+
