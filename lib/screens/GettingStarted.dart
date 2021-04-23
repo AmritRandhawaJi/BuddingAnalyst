@@ -40,8 +40,7 @@ class _GettingStartedScreenState extends State<GettingStartedScreen> {
               Column(
                 children: [
                   SizedBox(height: 10.0,),
-                Center(child: Text("Budding",style: TextStyle(fontFamily: "Trocchi",fontSize: 24.0),)),
-                Center(child: Text("Analyst",style: TextStyle(fontFamily: "Trocchi",fontSize: 22.0),)),
+                Center(child: Image.asset("assets/heading.png"))
               ],),
               PageView.builder(
                 controller: _pageController,
