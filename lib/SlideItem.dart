@@ -27,7 +27,9 @@ mainAxisAlignment: MainAxisAlignment.center,
             fontSize: 22,
           ),
         ),
-
+SizedBox(
+  height: 10.0,
+),
         Text(
           slideList[index].description,
           textAlign: TextAlign.center,
