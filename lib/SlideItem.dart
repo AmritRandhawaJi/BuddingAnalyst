@@ -17,7 +17,7 @@ mainAxisAlignment: MainAxisAlignment.center,
 
        Padding(
          padding: const EdgeInsets.all(18.0),
-         child: Container(width: screenSize.size.width,child: Image.asset(slideList[index].image)),
+         child: Container(width: screenSize.size.width,height: screenSize.size.height/2,child: Image.asset(slideList[index].image)),
        ),
 
 

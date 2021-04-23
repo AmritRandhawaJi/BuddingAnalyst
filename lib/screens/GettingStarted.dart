@@ -34,13 +34,11 @@ class _GettingStartedScreenState extends State<GettingStartedScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: SafeArea(
-          child: Container(
-            child: PageView.builder(
-              controller: _pageController,
-              onPageChanged: _onPageChanged,
-              itemCount: slideList.length,
-              itemBuilder: (ctx, i) => SlideItem(i),
-            ),
+          child: PageView.builder(
+            controller: _pageController,
+            onPageChanged: _onPageChanged,
+            itemCount: slideList.length,
+            itemBuilder: (ctx, i) => SlideItem(i),
           ),
         ),
         bottomSheet: _currentPage != slideList.length - 1
