@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>490183939357-92uod300jv4q716lvkk0e9dfddp5h0vc.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.490183939357-92uod300jv4q716lvkk0e9dfddp5h0vc</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>490183939357-cr3mgeo2r58bdl717vs29tskd7taur19.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBQsOuOVaW-3TXrqvAqS9-f8-Lx6_Jaqmo</string>
+	<key>GCM_SENDER_ID</key>
+	<string>490183939357</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.buddinganalyst.buddingAnalyst</string>
+	<key>PROJECT_ID</key>
+	<string>budding-analyst</string>
+	<key>STORAGE_BUCKET</key>
+	<string>budding-analyst.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:490183939357:ios:58da8d03043072be0d3df4</string>
+</dict>
+</plist>

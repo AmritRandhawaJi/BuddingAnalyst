@@ -1,13 +1,10 @@
 import 'dart:io';
-
 import 'package:budding_analyst/PageViewModel.dart';
 import 'package:budding_analyst/SlideItem.dart';
 import 'package:budding_analyst/screens/Signup.dart';
 import 'package:budding_analyst/widgets/SlideDots.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import 'LoginScreen.dart';
+import 'homeUi.dart';
 
 class GettingStartedScreen extends StatefulWidget {
   @override
@@ -40,7 +37,8 @@ class _GettingStartedScreenState extends State<GettingStartedScreen> {
               Column(
                 children: [
                   SizedBox(height: 10.0,),
-                Center(child: Image.asset("assets/heading.png"))
+                Hero(tag: "headingTag",
+                child: Center(child: Image.asset("assets/heading.png")))
               ],),
               PageView.builder(
                 controller: _pageController,
@@ -64,9 +62,9 @@ class _GettingStartedScreenState extends State<GettingStartedScreen> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => LoginScreen()));
+                                    builder: (context) => HomeUiPage()));
                           },
-                          child: Text("Skip",style: TextStyle(color: Colors.black),)),
+                          child: Text("Back",style: TextStyle(color: Colors.black),)),
                       Container(
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
@@ -104,3 +102,4 @@ class _GettingStartedScreenState extends State<GettingStartedScreen> {
     },child: Text("Get started",style: TextStyle(color: Colors.white),),height: Platform.isIOS ? 60.0: 50,minWidth: MediaQuery.of(context).size.width,color: Colors.indigoAccent,));
   }
 }
+
