@@ -102,7 +102,7 @@ class _GettingStartedScreenState extends State<GettingStartedScreen> {
                 ),
             )
             : MaterialButton(onPressed: (){
-          Navigator.push(
+          Navigator.pushReplacement(
               context,
               MaterialPageRoute(
                   builder: (context) => LoginScreen()));
