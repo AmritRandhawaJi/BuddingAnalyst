@@ -1,10 +1,11 @@
 import 'dart:io';
 import 'package:budding_analyst/PageViewModel.dart';
 import 'package:budding_analyst/SlideItem.dart';
+import 'package:budding_analyst/screens/LoginScreen.dart';
 import 'package:budding_analyst/screens/Signup.dart';
 import 'package:budding_analyst/widgets/SlideDots.dart';
 import 'package:flutter/material.dart';
-import 'homeUi.dart';
+import 'package:flutter/services.dart';
 
 class GettingStartedScreen extends StatefulWidget {
   @override
@@ -29,16 +30,23 @@ class _GettingStartedScreenState extends State<GettingStartedScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);
     return Scaffold(
+
         body: SafeArea(
           child: Stack(
             children: [
 
               Column(
                 children: [
-                  SizedBox(height: 10.0,),
                 Hero(tag: "headingTag",
-                child: Center(child: Image.asset("assets/heading.png")))
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Center(child: Image.asset("assets/heading.png",height: 100.0,width: 100.0,)),
+                ))
               ],),
               PageView.builder(
                 controller: _pageController,
@@ -59,10 +67,9 @@ class _GettingStartedScreenState extends State<GettingStartedScreen> {
                     children: [
                       TextButton(
                           onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => HomeUiPage()));
+                            _pageController.animateToPage(_currentPage - 1,
+                                duration: Duration(milliseconds: 250),
+                                curve: Curves.easeIn);
                           },
                           child: Text("Back",style: TextStyle(color: Colors.black),)),
                       Container(
@@ -98,7 +105,7 @@ class _GettingStartedScreenState extends State<GettingStartedScreen> {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => SignupScreen()));
+                  builder: (context) => LoginScreen()));
     },child: Text("Get started",style: TextStyle(color: Colors.white),),height: Platform.isIOS ? 60.0: 50,minWidth: MediaQuery.of(context).size.width,color: Colors.indigoAccent,));
   }
 }
