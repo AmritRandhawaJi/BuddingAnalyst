@@ -1,11 +1,13 @@
-import 'package:budding_analyst/screens/GettingStarted.dart';
-import 'package:budding_analyst/screens/LoginScreen.dart';
-import 'package:budding_analyst/screens/Signup.dart';
+import 'package:budding_analyst/screens/decision.dart';
+import 'package:budding_analyst/screens/gettingStarted.dart';
+import 'package:budding_analyst/screens/home.dart';
+import 'package:budding_analyst/screens/register.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-
-
 import 'package:flutter/widgets.dart';
+
+import 'model/userState.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,18 +16,39 @@ void main() async{
     runApp(MyApp());
 
 }
+class MyApp extends StatefulWidget {
 
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  bool _result = false;
+
+  @override
+  void initState() {
+    super.initState();
+    FirebaseAuth.instance.authStateChanges().listen((firebaseUser) {
+      if(firebaseUser !=null){
+        setState(() {
+        _result = true;
+        });
+      }else{
+        setState(() {
+          _result = false;
+        });
+      }
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: GettingStartedScreen(),
-      routes: {
-        LoginScreen.routeName: (ctx) => LoginScreen(),
-        SignupScreen.routeName: (ctx) => SignupScreen(),
-      },
+      home: _result ? Home() : UserState()
     );
   }
+
+
 }
+
+
