@@ -29,7 +29,6 @@ class _UserStateState extends State<UserState> {
      setState(() {
        result = true;
      });
-     print(value.getInt("userState"));
    }
    else{
      setState(() {
