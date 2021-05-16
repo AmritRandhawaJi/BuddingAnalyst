@@ -9,32 +9,29 @@ class UserState extends StatefulWidget {
 }
 
 class _UserStateState extends State<UserState> {
-  bool result = false;
+   bool result = false;
 
+
+void getData() async {
+  final value =  await SharedPreferences.getInstance();
+  if(value.getInt("userState") == 1){
+   setState(() {
+    result = true;
+   });
+  }
+
+}
   @override
-  void initState() {
+  void initState()  {
     super.initState();
-    getData();
+ getData();
   }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        home: result ? Decision() : GettingStartedScreen(),
+    return Scaffold(
+      body: result ? Decision() : GettingStartedScreen(),
     );
   }
-  Future<bool> getData()async{
-    final value = await SharedPreferences.getInstance();
-   if(value.getInt("userState") == 1){
-     setState(() {
-       result = true;
-     });
-   }
-   else{
-     setState(() {
-       result = false;
-     });
-   }
-   return false;
-  }
+
 }

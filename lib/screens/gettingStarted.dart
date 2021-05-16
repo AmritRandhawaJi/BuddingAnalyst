@@ -3,7 +3,7 @@ import 'package:budding_analyst/model/PageViewData.dart';
 import 'package:budding_analyst/model/SlideItem.dart';
 import 'package:budding_analyst/screens/loginScreen.dart';
 import 'package:budding_analyst/screens/decision.dart';
-import 'package:budding_analyst/screens/register.dart';
+import 'package:budding_analyst/screens/emailRegister.dart';
 import 'package:budding_analyst/widgets/SlideDots.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
