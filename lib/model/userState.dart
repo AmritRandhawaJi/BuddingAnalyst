@@ -1,3 +1,4 @@
+import 'package:budding_analyst/model/networkState.dart';
 import 'package:budding_analyst/screens/decision.dart';
 import 'package:budding_analyst/screens/gettingStarted.dart';
 import 'package:flutter/material.dart';

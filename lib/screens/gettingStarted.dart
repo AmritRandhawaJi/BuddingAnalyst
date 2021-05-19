@@ -1,10 +1,10 @@
 import 'dart:io';
 import 'package:budding_analyst/model/PageViewData.dart';
 import 'package:budding_analyst/model/SlideItem.dart';
-import 'package:budding_analyst/screens/loginScreen.dart';
+import 'package:budding_analyst/model/networkState.dart';
 import 'package:budding_analyst/screens/decision.dart';
-import 'package:budding_analyst/screens/emailRegister.dart';
 import 'package:budding_analyst/widgets/SlideDots.dart';
+import 'package:budding_analyst/widgets/internetAlert.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -110,11 +110,15 @@ class _GettingStartedScreenState extends State<GettingStartedScreen> {
               )
             : MaterialButton(
                 onPressed: () async {
-                  final data = await SharedPreferences.getInstance();
-                  data.setInt("userState", 1);
-
-                  Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) => Decision()));
+                await NetworkState.state();
+                  if(NetworkState.status()){
+                    final data = await SharedPreferences.getInstance();
+                    data.setInt("userState", 1);
+                    Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => Decision()));
+                  }
+                  else {
+                    InternetError(context).show();
+                  }
                 },
                 child: Text(
                   "Get started",
@@ -125,4 +129,5 @@ class _GettingStartedScreenState extends State<GettingStartedScreen> {
                 color: Colors.indigoAccent,
               ));
   }
+
 }

@@ -89,7 +89,7 @@ class _DecisionState extends State<Decision> {
                     Expanded(
                       child: MaterialButton(
                         onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()),);
+                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginScreen()),);
                         },
                         height: 50,
                         child: Text(
@@ -104,7 +104,8 @@ class _DecisionState extends State<Decision> {
                     Expanded(
                       child: MaterialButton(
                         onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterUi()),);
+
+                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => RegisterUi()),);
                         },
                         child: Text(
                           "Register",
