@@ -16,26 +16,24 @@ class _EmailRegisterState extends State<EmailRegister> {
     return Scaffold(
       backgroundColor: Colors.amberAccent,
         body: SlidingUpPanel(
-parallaxEnabled: true,
+          parallaxEnabled: true,
           parallaxOffset: 4.0,
-          maxHeight: MediaQuery.of(context).size.height / 1.5,
           borderRadius: BorderRadius.vertical(top: Radius.circular(30.0)),
+          minHeight: MediaQuery.of(context).size.height / 1.8,
 
-          minHeight: MediaQuery.of(context).size.height / 2,
           body: SafeArea(
             child: Column(
 
               children: [
+
                 Row(
                   children: [
                     TextButton(onPressed: (){
-                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => RegisterUi(),));
+                      Navigator.pop(context);
                     }, child: Icon(Icons.close,color: Colors.black,),)
                   ],
                 ),
-                SizedBox(
-                  height: 15.0,
-                ),
+
                 Container(
                     width: MediaQuery.of(context).size.width / 1.5,
                     child: Text(
@@ -52,11 +50,8 @@ parallaxEnabled: true,
                       "Join our community",
                       style: TextStyle(fontSize: 16.0),
                     )),
-                Container(
-                  height: MediaQuery.of(context).size.height/5.5,
-                  width: MediaQuery.of(context).size.width/1.5,
-                  child: Image.asset("assets/emailPagePlane.png"),
-                ),
+
+
               ],
             ),
           ),

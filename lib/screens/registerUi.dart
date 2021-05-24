@@ -6,7 +6,7 @@ import 'package:budding_analyst/model/networkState.dart';
 import 'package:budding_analyst/screens/emailRegister.dart';
 import 'package:budding_analyst/screens/phoneOTP.dart';
 import 'package:budding_analyst/widgets/internetAlert.dart';
-import 'package:connectivity/connectivity.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';

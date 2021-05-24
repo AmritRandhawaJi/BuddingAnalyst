@@ -1,5 +1,5 @@
-import 'package:budding_analyst/screens/home.dart';
 import 'package:budding_analyst/screens/loginScreen.dart';
+import 'package:budding_analyst/screens/registerForm.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +17,9 @@ class _SlideUpPageState extends State<SlideUpPage> {
   TextEditingController emailController = TextEditingController();
 
   TextEditingController passwordController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
+  GlobalKey<FormState> nameKey = GlobalKey<FormState>();
+
 
   GlobalKey<FormState> stateKey = GlobalKey<FormState>();
 
@@ -46,8 +49,9 @@ class _SlideUpPageState extends State<SlideUpPage> {
           .createUserWithEmailAndPassword(email: id, password: pass);
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => Home()),
+        MaterialPageRoute(builder: (context) => RegisterForm()),
       );
+
     } on FirebaseAuthException catch (e) {
       setState(() {
         buttonState = false;
@@ -79,140 +83,136 @@ class _SlideUpPageState extends State<SlideUpPage> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: [
-        SizedBox(
-          height: 40.0,
-        ),
-        Form(
-          key: stateKey,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 18.0),
-            child: TextFormField(
-              keyboardType: TextInputType.emailAddress,
-              validator: (email) {
-                if (email!.isEmpty) {
-                  return "Email is required";
-                } else if (!EmailValidator.validate(email)) {
-                  return "Email invalid";
-                } else if (emailResult) {
-                  return "email is already exist";
-                } else {
-                  return null;
+          children: [
+            SizedBox(
+              height: 25.0,
+            ),
+            Form(
+              key: stateKey,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                child: TextFormField(
+                  keyboardType: TextInputType.emailAddress,
+                  validator: (email) {
+                    if (email!.isEmpty) {
+                      return "Email is required";
+                    } else if (!EmailValidator.validate(email)) {
+                      return "Email invalid";
+                    } else if (emailResult) {
+                      return "email is already exist";
+                    } else {
+                      return null;
+                    }
+                  },
+                  autofillHints: [AutofillHints.email],
+                  controller: emailController,
+                  decoration: InputDecoration(filled: true,
+                      fillColor: Colors.white,
+                      border: OutlineInputBorder(),
+                      hintText: "What's your email address?",
+                      hintStyle: TextStyle(color: Colors.black),
+                      suffixIcon: GestureDetector(
+                        child: Icon(Icons.close),
+                        onTap: () {
+                          emailController.text = "";
+                        },
+                      ),
+                      prefixIcon: Icon(Icons.email_outlined),
+                      labelText: "Email",
+                      labelStyle: TextStyle(color: Colors.black)),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 25.0,
+            ),
+            Form(
+              key: stateKey2,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                child: TextFormField(
+                  obscureText: hiddenState,
+                  validator: (password) {
+                    if (password!.isEmpty) {
+                      return "Password required";
+                    } else if (passwordResult) {
+                      return "Choose Strong password";
+                    } else {
+                      return null;
+                    }
+                  },
+                  controller: passwordController,
+                  decoration: InputDecoration(filled: true,
+                      fillColor: Colors.white,
+                      border: OutlineInputBorder(),
+                      hintText: "Enter a password",
+                      suffixIcon: GestureDetector(
+                        child: hiddenState
+                            ? Icon(
+                          Icons.remove_red_eye_outlined,
+                          color: Colors.black87,
+                        )
+                            : Icon(
+                          Icons.remove_red_eye,
+                          color: Colors.black,
+                        ),
+                        onTap: () {
+                          setState(() {
+                            if (hiddenState) {
+                              hiddenState = false;
+                            } else {
+                              hiddenState = true;
+                            }
+                          });
+                        },
+                      ),
+                      hintStyle: TextStyle(color: Colors.black),
+                      prefixIcon: Icon(Icons.lock_outline),
+                      labelText: "Password",
+                      labelStyle: TextStyle(color: Colors.black)),
+                ),
+              ),
+            ),
+
+            Container(
+              child: buttonState ? CircularProgressIndicator(valueColor: AlwaysStoppedAnimation(Colors.black),) : null,
+            ),
+            SizedBox(
+              height: 10.0,
+            ),
+            MaterialButton(
+              onPressed: buttonState
+                  ? null
+                  : () async {
+                if (stateKey.currentState!.validate() &&
+                    stateKey2.currentState!.validate()) {
+                  setState(() {
+                    _firebaseValidation();
+                  });
                 }
               },
-              autofillHints: [AutofillHints.email],
-              controller: emailController,
-              decoration: InputDecoration(filled: true,
-                  fillColor: Colors.white,
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0)),
-                  hintText: "What's your email address?",
-                  hintStyle: TextStyle(color: Colors.black),
-                  suffixIcon: GestureDetector(
-                    child: Icon(Icons.close),
-                    onTap: () {
-                      emailController.text = "";
-                    },
-                  ),
-                  prefixIcon: Icon(Icons.email_outlined),
-                  labelText: "Email",
-                  labelStyle: TextStyle(color: Colors.black)),
+              child: Text(
+                "Register",
+                style: TextStyle(color: Colors.white),
+              ),
+              color: Colors.black,
+              elevation: 5,
+              disabledColor: Colors.grey,
+              disabledTextColor: Colors.black,
+              shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+              height: 40.0,
+              minWidth: MediaQuery.of(context).size.width / 2,
             ),
-          ),
-        ),
-        SizedBox(
-          height: 25.0,
-        ),
-        Form(
-          key: stateKey2,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 18.0),
-            child: TextFormField(
-              obscureText: hiddenState,
-              validator: (password) {
-                if (password!.isEmpty) {
-                  return "Password required";
-                } else if (passwordResult) {
-                  return "Choose Strong password";
-                } else {
-                  return null;
-                }
-              },
-              controller: passwordController,
-              decoration: InputDecoration(filled: true,
-                  fillColor: Colors.white,
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0)),
-                  hintText: "Enter a password",
-                  suffixIcon: GestureDetector(
-                    child: hiddenState
-                        ? Icon(
-                      Icons.remove_red_eye_outlined,
-                      color: Colors.black87,
-                    )
-                        : Icon(
-                      Icons.remove_red_eye,
-                      color: Colors.black,
-                    ),
-                    onTap: () {
-                      setState(() {
-                        if (hiddenState) {
-                          hiddenState = false;
-                        } else {
-                          hiddenState = true;
-                        }
-                      });
-                    },
-                  ),
-                  hintStyle: TextStyle(color: Colors.black),
-                  prefixIcon: Icon(Icons.lock_outline),
-                  labelText: "Password",
-                  labelStyle: TextStyle(color: Colors.black)),
+            SizedBox(
+              height: 10.0,
             ),
-          ),
-        ),
-        SizedBox(
-          height: 10.0,
-        ),
-        Container(
-          child: buttonState ? CircularProgressIndicator(valueColor: AlwaysStoppedAnimation(Colors.black),) : null,
-        ),
-        SizedBox(
-          height: 10.0,
-        ),
-        MaterialButton(
-          onPressed: buttonState
-              ? null
-              : () async {
-            if (stateKey.currentState!.validate() &&
-                stateKey2.currentState!.validate()) {
-              setState(() {
-                _firebaseValidation();
-              });
-            }
-          },
-          child: Text(
-            "Register",
-            style: TextStyle(color: Colors.white),
-          ),
-          color: Colors.black,
-          elevation: 5,
-          disabledColor: Colors.grey,
-          disabledTextColor: Colors.black,
-          shape:
-          RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
-          height: 40.0,
-          minWidth: MediaQuery.of(context).size.width / 2,
-        ),
-        SizedBox(
-          height: 20.0,
-        ),
-        Text("Already have an account?"),
-        TextButton( onPressed: () {
-          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginScreen(),));
-        },
-        child: Text("Login",style: TextStyle(fontSize: 14.0,color: Colors.black)),)
-      ],
-    );
+            Text("Already have an account?"),
+            TextButton( onPressed: () {
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginScreen(),));
+            },
+            child: Text("Login",style: TextStyle(fontSize: 14.0,color: Colors.black)),)
+          ],
+        );
   }
 }

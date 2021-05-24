@@ -1,8 +1,8 @@
 import 'package:budding_analyst/screens/home.dart';
-import 'package:budding_analyst/screens/emailRegister.dart';
+
 import 'package:budding_analyst/screens/loginScreen.dart';
 import 'package:budding_analyst/screens/registerUi.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';

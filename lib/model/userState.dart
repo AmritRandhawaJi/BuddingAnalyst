@@ -16,11 +16,10 @@ class _UserStateState extends State<UserState> {
 void getData() async {
   final value =  await SharedPreferences.getInstance();
   if(value.getInt("userState") == 1){
-   setState(() {
-    result = true;
-   });
+    setState(() {
+      result = true;
+    });
   }
-
 }
   @override
   void initState()  {

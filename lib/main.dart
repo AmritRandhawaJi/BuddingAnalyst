@@ -1,5 +1,4 @@
 import 'package:budding_analyst/model/userState.dart';
-import 'package:budding_analyst/screens/decision.dart';
 import 'package:budding_analyst/screens/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
