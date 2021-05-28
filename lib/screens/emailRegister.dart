@@ -1,8 +1,6 @@
 import 'package:budding_analyst/model/slideUpFolding.dart';
-import 'package:budding_analyst/screens/registerUi.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class EmailRegister extends StatefulWidget {
@@ -20,12 +18,9 @@ class _EmailRegisterState extends State<EmailRegister> {
           parallaxOffset: 4.0,
           borderRadius: BorderRadius.vertical(top: Radius.circular(30.0)),
           minHeight: MediaQuery.of(context).size.height / 1.8,
-
           body: SafeArea(
             child: Column(
-
               children: [
-
                 Row(
                   children: [
                     TextButton(onPressed: (){
@@ -33,7 +28,6 @@ class _EmailRegisterState extends State<EmailRegister> {
                     }, child: Icon(Icons.close,color: Colors.black,),)
                   ],
                 ),
-
                 Container(
                     width: MediaQuery.of(context).size.width / 1.5,
                     child: Text(

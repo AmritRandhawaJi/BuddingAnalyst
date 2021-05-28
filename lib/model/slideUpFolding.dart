@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:budding_analyst/screens/loginScreen.dart';
 import 'package:budding_analyst/screens/registerForm.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class SlideUpPage extends StatefulWidget {
@@ -173,9 +176,11 @@ class _SlideUpPageState extends State<SlideUpPage> {
                 ),
               ),
             ),
-
+            SizedBox(
+              height: 10.0,
+            ),
             Container(
-              child: buttonState ? CircularProgressIndicator(valueColor: AlwaysStoppedAnimation(Colors.black),) : null,
+              child: buttonState ? loading() : null,
             ),
             SizedBox(
               height: 10.0,
@@ -214,5 +219,8 @@ class _SlideUpPageState extends State<SlideUpPage> {
             child: Text("Login",style: TextStyle(fontSize: 14.0,color: Colors.black)),)
           ],
         );
+  }
+  Widget loading(){
+    return Platform.isIOS ? CupertinoActivityIndicator() : CircularProgressIndicator(valueColor: AlwaysStoppedAnimation(Colors.black));
   }
 }

@@ -1,8 +1,7 @@
+import 'dart:io';
 import 'package:budding_analyst/screens/home.dart';
-
 import 'package:budding_analyst/screens/loginScreen.dart';
 import 'package:budding_analyst/screens/registerUi.dart';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -18,7 +17,7 @@ class _DecisionState extends State<Decision> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xffFFFFFF),
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: Container(
           height: MediaQuery.of(context).size.height,
@@ -32,7 +31,8 @@ class _DecisionState extends State<Decision> {
                   Expanded(
                     flex: 3,
                     child: Center(
-                        child: Image.asset("assets/heading.png",
+                        child: Image.asset(
+                      "assets/heading.png",
                       width: MediaQuery.of(context).size.width / 2.2,
                     )),
                   ),
@@ -40,11 +40,20 @@ class _DecisionState extends State<Decision> {
                     flex: 1,
                     child: TextButton(
                         onPressed: () async {
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => Home(),
-                              ));
+                          if (Platform.isIOS) {
+                            Navigator.pushReplacement(
+                                context,
+                                CupertinoPageRoute(
+                                  builder: (context) => RegisterUi(),
+                                ));
+                          }
+                          if (Platform.isAndroid) {
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => Home(),
+                                ));
+                          }
                         },
                         child: Text(
                           "Skip",
@@ -56,7 +65,7 @@ class _DecisionState extends State<Decision> {
               Container(
                 width: MediaQuery.of(context).size.width / 1.5,
                 child: Text(
-                  "Our world of Analsys",
+                  "Our world of Analysis",
                   style: TextStyle(
                       color: Colors.black,
                       fontSize: 32,
@@ -89,7 +98,20 @@ class _DecisionState extends State<Decision> {
                     Expanded(
                       child: MaterialButton(
                         onPressed: () {
-                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginScreen()),);
+                          if (Platform.isIOS) {
+                            Navigator.pushReplacement(
+                                context,
+                                CupertinoPageRoute(
+                                  builder: (context) => LoginScreen(),
+                                ));
+                          }
+                         else if (Platform.isAndroid) {
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => LoginScreen(),
+                                ));
+                          }
                         },
                         height: 50,
                         child: Text(
@@ -104,8 +126,20 @@ class _DecisionState extends State<Decision> {
                     Expanded(
                       child: MaterialButton(
                         onPressed: () {
-
-                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => RegisterUi()),);
+                          if (Platform.isIOS) {
+                            Navigator.pushReplacement(
+                                context,
+                                CupertinoPageRoute(
+                                  builder: (context) => RegisterUi(),
+                                ));
+                          }
+                         else if (Platform.isAndroid) {
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => RegisterUi(),
+                                ));
+                          }
                         },
                         child: Text(
                           "Register",

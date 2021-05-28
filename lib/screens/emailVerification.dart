@@ -69,7 +69,7 @@ class _EmailVerificationState extends State<EmailVerification> {
               onPressed: () {
                 if (!user.emailVerified) {
                   Error(context, "Email not verified",
-                          "Please check inbox and tap to verify", "Ok", "Skip for now")
+                      "Please check inbox and tap to verify", "Ok", "Skip for now")
                       .show();
                 } else {
                   Navigator.pushReplacement(

@@ -42,9 +42,14 @@ class _GettingStartedScreenState extends State<GettingStartedScreen> {
             children: [
               Column(
                 children: [
-                  Hero(tag: "headingTag",
-                  child: Center(child: Image.asset("assets/heading.png",width: 100,height: 100,))),
-
+                  Hero(
+                      tag: "headingTag",
+                      child: Center(
+                          child: Image.asset(
+                        "assets/heading.png",
+                        width: 100,
+                        height: 100,
+                      ))),
                 ],
               ),
               PageView.builder(
@@ -110,14 +115,21 @@ class _GettingStartedScreenState extends State<GettingStartedScreen> {
               )
             : MaterialButton(
                 onPressed: () async {
-                await NetworkState.state();
-                  if(NetworkState.status()){
+                  await NetworkState.state();
+                  if (NetworkState.status()) {
                     final data = await SharedPreferences.getInstance();
                     data.setInt("userState", 1);
-                    Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => Decision()));
-                  }
-                  else {
-                    InternetError(context).show();
+                    if (Platform.isIOS) {
+                      Navigator.of(context).pushReplacement(CupertinoPageRoute(builder: (context) => Decision(),));
+                    }else if(Platform.isAndroid) {
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Decision(),
+                          ));
+                    }
+                  } else {
+                      InternetError(context).show();
                   }
                 },
                 child: Text(
@@ -129,5 +141,4 @@ class _GettingStartedScreenState extends State<GettingStartedScreen> {
                 color: Colors.indigoAccent,
               ));
   }
-
 }
