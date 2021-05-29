@@ -139,7 +139,8 @@ class _SlideUpPageState extends State<SlideUpPage> {
                   validator: (password) {
                     if (password!.isEmpty) {
                       return "Password required";
-                    } else if (passwordResult) {
+                    }
+                    else if (passwordResult) {
                       return "Choose Strong password";
                     } else {
                       return null;

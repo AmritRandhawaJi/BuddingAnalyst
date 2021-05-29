@@ -74,7 +74,7 @@ class _PhoneAuthFirebaseState extends State<PhoneAuthFirebase> {
                 SizedBox(height: 25,),
                 MaterialButton(
                   onPressed: () {
-                    _mobileAuthFirebase(widget.number);
+                    // _mobileAuthFirebase(widget.number);
                   },
                   height: 50,
                   color: Colors.black,

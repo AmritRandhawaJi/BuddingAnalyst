@@ -74,21 +74,23 @@ class _EmailVerificationState extends State<EmailVerification> {
                   Error(context, "Email not verified",
                       "Please check inbox and tap to verify", "Ok", "Skip for now")
                       .show();
-                } else {
-                  if(Platform.isIOS)
+                }
+                else if (user.emailVerified){
+                if(Platform.isIOS) {
                   Navigator.pushReplacement(
                       context,
                       CupertinoPageRoute(
                         builder: (context) => Home(),
                       ));
-                }
-                if(Platform.isAndroid){
-                  Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => Home(),
-                      ));
-                }
+
+                  if (Platform.isAndroid) {
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Home(),
+                        ));
+                  }
+                }  }
               },
               height: 50.0,
               minWidth: MediaQuery.of(context).size.width / 2,
