@@ -1,21 +1,3 @@
-class RegisterFormData {
-
-  String _firstName,_gender,_lastName, _registerTime,_age;
-
-
-  String get firstName => _firstName;
-
-  RegisterFormData(this._firstName, this._gender, this._lastName,
-      this._registerTime, this._age);
-
-  get gender => _gender;
-
-  get lastName => _lastName;
-
-  get registerTime => _registerTime;
-
-  get age => _age;
-}
 
 class SpinnerData{
  static List<String> spinnerItems = [

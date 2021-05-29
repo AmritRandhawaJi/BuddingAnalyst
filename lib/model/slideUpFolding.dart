@@ -18,14 +18,11 @@ class SlideUpPage extends StatefulWidget {
 
 class _SlideUpPageState extends State<SlideUpPage> {
   TextEditingController emailController = TextEditingController();
-
   TextEditingController passwordController = TextEditingController();
-  TextEditingController nameController = TextEditingController();
-  GlobalKey<FormState> nameKey = GlobalKey<FormState>();
+
 
 
   GlobalKey<FormState> stateKey = GlobalKey<FormState>();
-
   GlobalKey<FormState> stateKey2 = GlobalKey<FormState>();
 
   bool hiddenState = true;
@@ -50,6 +47,10 @@ class _SlideUpPageState extends State<SlideUpPage> {
       });
       await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: id, password: pass);
+      if(Platform.isIOS)
+        Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) => RegisterForm(),));
+
+      if(Platform.isAndroid)
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => RegisterForm()),

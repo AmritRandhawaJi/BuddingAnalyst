@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:budding_analyst/widgets/errors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'home.dart';
@@ -72,6 +75,14 @@ class _EmailVerificationState extends State<EmailVerification> {
                       "Please check inbox and tap to verify", "Ok", "Skip for now")
                       .show();
                 } else {
+                  if(Platform.isIOS)
+                  Navigator.pushReplacement(
+                      context,
+                      CupertinoPageRoute(
+                        builder: (context) => Home(),
+                      ));
+                }
+                if(Platform.isAndroid){
                   Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
