@@ -1,24 +1,28 @@
 import 'dart:io';
 import 'package:budding_analyst/model/registerFormData.dart';
-import 'package:budding_analyst/screens/emailVerification.dart';
+import 'package:budding_analyst/screens/home.dart';
+import 'package:budding_analyst/widgets/indicator.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class RegisterForm extends StatefulWidget {
+class RegisterFormMobile extends StatefulWidget {
   @override
-  _RegisterFormState createState() => _RegisterFormState();
+  _RegisterFormMobileState createState() => _RegisterFormMobileState();
 }
 
-class _RegisterFormState extends State<RegisterForm> {
+class _RegisterFormMobileState extends State<RegisterFormMobile> {
   User user = FirebaseAuth.instance.currentUser!;
 
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
 
   GlobalKey<FormState> firstNameKey = GlobalKey<FormState>();
   GlobalKey<FormState> lastNameKey = GlobalKey<FormState>();
+  GlobalKey<FormState> emailKey = GlobalKey<FormState>();
   GlobalKey<FormState> ageKey = GlobalKey<FormState>();
 
   var _age;
@@ -37,6 +41,7 @@ class _RegisterFormState extends State<RegisterForm> {
     FirebaseFirestore.instance.terminate();
     firstNameController.dispose();
     lastNameController.dispose();
+    emailController.dispose();
     super.dispose();
   }
 
@@ -129,6 +134,33 @@ class _RegisterFormState extends State<RegisterForm> {
                 ),
               ),
             ],
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Form(
+              key: emailKey,
+              child: TextFormField(
+                keyboardType: TextInputType.emailAddress,
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return "Enter email";
+                  } else if (!EmailValidator.validate(value)) {
+                    return "Email invalid";
+                  } else {
+                    return null;
+                  }
+                },
+                autofillHints: [AutofillHints.name],
+                controller: emailController,
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    filled: true,
+                    fillColor: Colors.white,
+                    hintStyle: TextStyle(color: Colors.black),
+                    labelText: "Email",
+                    labelStyle: TextStyle(color: Colors.black)),
+              ),
+            ),
           ),
           SizedBox(height: 20),
           Padding(
@@ -255,7 +287,8 @@ class _RegisterFormState extends State<RegisterForm> {
             onPressed: () {
               if (firstNameKey.currentState!.validate() &
                   lastNameKey.currentState!.validate() &
-                  ageKey.currentState!.validate()) {
+                  ageKey.currentState!.validate() &
+                  emailKey.currentState!.validate()) {
                 _createDatabase();
               }
             },
@@ -273,7 +306,7 @@ class _RegisterFormState extends State<RegisterForm> {
             height: 10.0,
           ),
           Container(
-            child: loading ? activityIndicate() : null,
+            child: loading ? Indicator() : null,
           ),
           SizedBox(
             height: 10,
@@ -287,33 +320,27 @@ class _RegisterFormState extends State<RegisterForm> {
     setState(() {
       loading = true;
     });
-    FirebaseFirestore.instance.collection("users").doc(user.uid).set({
+    await FirebaseFirestore.instance.collection("users").doc(user.uid).set({
       "first name": firstNameController.value.text,
       "last name": lastNameController.value.text,
-      "email": user.email,
+      "email": emailController.text,
       "age": _age,
       "gender": _gender,
       "registration": DateTime.now()
     }, SetOptions(merge: true)).then((value) => {
-          if (Platform.isIOS)
-            Navigator.pushReplacement(
-                context,
-                CupertinoPageRoute(
-                  builder: (context) => EmailVerification(),
-                ))
-          else if (Platform.isAndroid)
-            Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => EmailVerification(),
-                ))
-        });
+      if (Platform.isIOS)
+        Navigator.pushReplacement(
+            context,
+            CupertinoPageRoute(
+              builder: (context) => Home(),
+            ))
+      else if (Platform.isAndroid)
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => Home(),
+            ))
+    });
   }
 }
 
-Widget activityIndicate() {
-  return Platform.isIOS
-      ? CupertinoActivityIndicator()
-      : CircularProgressIndicator(
-          valueColor: AlwaysStoppedAnimation(Colors.black));
-}

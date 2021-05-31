@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "490183939357",
+    "firebase_url": "https://budding-analyst-default-rtdb.firebaseio.com",
     "project_id": "budding-analyst",
     "storage_bucket": "budding-analyst.appspot.com"
   },
@@ -13,6 +14,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "490183939357-re53mertv3jq7m5orrap5hm8a152ffa2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.buddinganalyst.budding_analyst",
+            "certificate_hash": "6d29ed0bc7f17a62b8b1dd58f1702a4b1fd71158"
+          }
+        },
         {
           "client_id": "490183939357-1f9co5vveimtane0qp0ub6vjvh60lbet.apps.googleusercontent.com",
           "client_type": 3
@@ -34,7 +43,8 @@
               "client_id": "490183939357-92uod300jv4q716lvkk0e9dfddp5h0vc.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.buddinganalyst.buddingAnalyst"
+                "bundle_id": "com.buddinganalyst.buddingAnalyst",
+                "app_store_id": "99539939"
               }
             }
           ]

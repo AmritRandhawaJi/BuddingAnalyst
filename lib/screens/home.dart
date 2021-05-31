@@ -19,6 +19,7 @@ class _HomeState extends State<Home> {
             children: [
              MaterialButton(onPressed: ()async {
                await FirebaseAuth.instance.signOut();
+
                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Decision(),));
              },child: Text("Sign out"),)
             ],

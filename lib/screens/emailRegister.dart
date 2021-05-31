@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:budding_analyst/model/slideUpFolding.dart';
+import 'package:budding_analyst/screens/registerUi.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
@@ -24,7 +27,20 @@ class _EmailRegisterState extends State<EmailRegister> {
                 Row(
                   children: [
                     TextButton(onPressed: (){
-                      Navigator.pop(context);
+                      if (Platform.isIOS) {
+                        Navigator.pushReplacement(
+                            context,
+                            CupertinoPageRoute(
+                              builder: (context) => RegisterUi()
+                              ,
+                            ));
+                      } else if (Platform.isAndroid) {
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => RegisterUi(),
+                            ));
+                      }
                     }, child: Icon(Icons.close,color: Colors.black,),)
                   ],
                 ),

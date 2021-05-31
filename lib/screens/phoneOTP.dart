@@ -2,6 +2,7 @@
 import 'dart:io';
 
 import 'package:budding_analyst/screens/phoneAuthentication.dart';
+import 'package:budding_analyst/screens/registerUi.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -38,7 +39,20 @@ class _MobileAuthenticationState extends State<MobileAuthentication> {
           children: [
             TextButton(
               onPressed: () {
-                Navigator.pop(context);
+                if (Platform.isIOS) {
+                  Navigator.pushReplacement(
+                      context,
+                      CupertinoPageRoute(
+                        builder: (context) => RegisterUi()
+                        ,
+                      ));
+                } else if (Platform.isAndroid) {
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => RegisterUi(),
+                      ));
+                }
               },
               child: Icon(
                 Icons.close,

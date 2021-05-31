@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:budding_analyst/assets/my_flutter_app_icons.dart';
 import 'package:budding_analyst/model/networkState.dart';
 import 'package:budding_analyst/screens/emailRegister.dart';
+import 'package:budding_analyst/screens/loginScreen.dart';
 import 'package:budding_analyst/screens/phoneOTP.dart';
 import 'package:budding_analyst/widgets/internetAlert.dart';
 import 'package:flutter/cupertino.dart';
@@ -40,13 +41,13 @@ class _RegisterUiState extends State<RegisterUi> {
                     await NetworkState.state();
                     if (NetworkState.status()) {
                       if (Platform.isIOS) {
-                        Navigator.push(
+                        Navigator.pushReplacement(
                             context,
                             CupertinoPageRoute(
                               builder: (context) => EmailRegister(),
                             ));
                       } else if (Platform.isAndroid) {
-                        Navigator.push(
+                        Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
                               builder: (context) => EmailRegister(),
@@ -74,13 +75,13 @@ class _RegisterUiState extends State<RegisterUi> {
                     await NetworkState.state();
                     if (NetworkState.status()) {
                       if (Platform.isIOS) {
-                        Navigator.push(
+                        Navigator.pushReplacement(
                             context,
                             CupertinoPageRoute(
                               builder: (context) => MobileAuthentication(),
                             ));
                       } else if (Platform.isAndroid) {
-                        Navigator.push(
+                        Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
                               builder: (context) => MobileAuthentication(),
@@ -173,6 +174,33 @@ class _RegisterUiState extends State<RegisterUi> {
                   color: Colors.white,
                   minWidth: MediaQuery.of(context).size.width / 1.2,
                   height: 50,
+                ),
+                SizedBox(
+                  height: 20.0,
+                ),
+                Column(
+
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 20),
+                      child: Text("Already have an account?",style: TextStyle(color: Colors.black)),
+                    ),
+                    TextButton(onPressed: (){
+                      if (Platform.isIOS) {
+                        Navigator.pushReplacement(
+                            context,
+                            CupertinoPageRoute(
+                              builder: (context) => LoginScreen(),
+                            ));
+                      } else if (Platform.isAndroid) {
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => LoginScreen(),
+                            ));
+                      }
+                    }, child: Text("Login"))
+                  ],
                 ),
               ],
             ),

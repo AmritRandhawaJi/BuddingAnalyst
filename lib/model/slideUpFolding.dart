@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:budding_analyst/widgets/indicator.dart';
 import 'package:budding_analyst/screens/loginScreen.dart';
 import 'package:budding_analyst/screens/registerForm.dart';
 import 'package:email_validator/email_validator.dart';
@@ -182,7 +183,7 @@ class _SlideUpPageState extends State<SlideUpPage> {
               height: 10.0,
             ),
             Container(
-              child: buttonState ? loading() : null,
+              child: buttonState ? Indicator() : null,
             ),
             SizedBox(
               height: 10.0,
@@ -222,7 +223,5 @@ class _SlideUpPageState extends State<SlideUpPage> {
           ],
         );
   }
-  Widget loading(){
-    return Platform.isIOS ? CupertinoActivityIndicator() : CircularProgressIndicator(valueColor: AlwaysStoppedAnimation(Colors.black));
-  }
+
 }

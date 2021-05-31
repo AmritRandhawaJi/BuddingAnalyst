@@ -1,8 +1,8 @@
-import 'package:budding_analyst/model/networkState.dart';
+
 import 'package:budding_analyst/screens/decision.dart';
 import 'package:budding_analyst/screens/gettingStarted.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
 
 class UserState extends StatefulWidget {
 final  bool _result;
