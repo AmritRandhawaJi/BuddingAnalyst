@@ -1,6 +1,8 @@
 import 'dart:io';
+import 'package:budding_analyst/model/mover.dart';
 import 'package:budding_analyst/model/registerFormData.dart';
 import 'package:budding_analyst/screens/emailVerification.dart';
+import 'package:budding_analyst/widgets/indicator.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -273,7 +275,7 @@ class _RegisterFormState extends State<RegisterForm> {
             height: 10.0,
           ),
           Container(
-            child: loading ? activityIndicate() : null,
+            child: loading ? Indicator() : null,
           ),
           SizedBox(
             height: 10,
@@ -295,25 +297,7 @@ class _RegisterFormState extends State<RegisterForm> {
       "gender": _gender,
       "registration": DateTime.now()
     }, SetOptions(merge: true)).then((value) => {
-          if (Platform.isIOS)
-            Navigator.pushReplacement(
-                context,
-                CupertinoPageRoute(
-                  builder: (context) => EmailVerification(),
-                ))
-          else if (Platform.isAndroid)
-            Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => EmailVerification(),
-                ))
+            Mover.move(context, EmailVerification())
         });
   }
-}
-
-Widget activityIndicate() {
-  return Platform.isIOS
-      ? CupertinoActivityIndicator()
-      : CircularProgressIndicator(
-          valueColor: AlwaysStoppedAnimation(Colors.black));
 }

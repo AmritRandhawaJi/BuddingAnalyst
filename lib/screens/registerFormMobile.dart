@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:budding_analyst/model/mover.dart';
 import 'package:budding_analyst/model/registerFormData.dart';
 import 'package:budding_analyst/screens/home.dart';
 import 'package:budding_analyst/widgets/indicator.dart';
@@ -327,20 +328,6 @@ class _RegisterFormMobileState extends State<RegisterFormMobile> {
       "age": _age,
       "gender": _gender,
       "registration": DateTime.now()
-    }, SetOptions(merge: true)).then((value) => {
-      if (Platform.isIOS)
-        Navigator.pushReplacement(
-            context,
-            CupertinoPageRoute(
-              builder: (context) => Home(),
-            ))
-      else if (Platform.isAndroid)
-        Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) => Home(),
-            ))
-    });
+    }, SetOptions(merge: true)).then((value) => {Mover.move(context, Home())});
   }
 }
-

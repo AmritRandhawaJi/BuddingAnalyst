@@ -1,6 +1,7 @@
 
 import 'dart:io';
 
+import 'package:budding_analyst/model/mover.dart';
 import 'package:budding_analyst/screens/phoneAuthentication.dart';
 import 'package:budding_analyst/screens/registerUi.dart';
 import 'package:country_code_picker/country_code_picker.dart';
@@ -39,20 +40,7 @@ class _MobileAuthenticationState extends State<MobileAuthentication> {
           children: [
             TextButton(
               onPressed: () {
-                if (Platform.isIOS) {
-                  Navigator.pushReplacement(
-                      context,
-                      CupertinoPageRoute(
-                        builder: (context) => RegisterUi()
-                        ,
-                      ));
-                } else if (Platform.isAndroid) {
-                  Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => RegisterUi(),
-                      ));
-                }
+                Mover.move(context, RegisterUi());
               },
               child: Icon(
                 Icons.close,
@@ -143,15 +131,8 @@ class _MobileAuthenticationState extends State<MobileAuthentication> {
           MaterialButton(
             onPressed: () {
               if (phoneAuthKey.currentState!.validate()) {
-                if(Platform.isIOS){
-                  String number = countryCode + numberField.text;
-                  Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) => PhoneAuthFirebase(number),));
-                }
-                if(Platform.isAndroid){
-                String number = countryCode + numberField.text;
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => PhoneAuthFirebase(number),));
+                Mover.move(context, PhoneAuthFirebase(numberField.text));
               }
-                }
             },
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10)),

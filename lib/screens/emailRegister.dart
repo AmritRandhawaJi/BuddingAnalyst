@@ -1,6 +1,5 @@
-import 'dart:io';
-
-import 'package:budding_analyst/model/slideUpFolding.dart';
+import 'package:budding_analyst/model/mover.dart';
+import 'package:budding_analyst/screens/slideUpFolding.dart';
 import 'package:budding_analyst/screens/registerUi.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -10,12 +9,12 @@ class EmailRegister extends StatefulWidget {
   @override
   _EmailRegisterState createState() => _EmailRegisterState();
 }
-class _EmailRegisterState extends State<EmailRegister> {
 
+class _EmailRegisterState extends State<EmailRegister> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.amberAccent,
+        backgroundColor: Colors.amberAccent,
         body: SlidingUpPanel(
           parallaxEnabled: true,
           parallaxOffset: 4.0,
@@ -26,22 +25,15 @@ class _EmailRegisterState extends State<EmailRegister> {
               children: [
                 Row(
                   children: [
-                    TextButton(onPressed: (){
-                      if (Platform.isIOS) {
-                        Navigator.pushReplacement(
-                            context,
-                            CupertinoPageRoute(
-                              builder: (context) => RegisterUi()
-                              ,
-                            ));
-                      } else if (Platform.isAndroid) {
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => RegisterUi(),
-                            ));
-                      }
-                    }, child: Icon(Icons.close,color: Colors.black,),)
+                    TextButton(
+                      onPressed: () {
+                        Mover.move(context, RegisterUi());
+                      },
+                      child: Icon(
+                        Icons.close,
+                        color: Colors.black,
+                      ),
+                    )
                   ],
                 ),
                 Container(
@@ -60,8 +52,6 @@ class _EmailRegisterState extends State<EmailRegister> {
                       "Join our community",
                       style: TextStyle(fontSize: 16.0),
                     )),
-
-
               ],
             ),
           ),
@@ -71,4 +61,3 @@ class _EmailRegisterState extends State<EmailRegister> {
         ));
   }
 }
-

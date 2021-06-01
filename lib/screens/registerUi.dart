@@ -1,5 +1,5 @@
-import 'dart:io';
 import 'package:budding_analyst/assets/my_flutter_app_icons.dart';
+import 'package:budding_analyst/model/mover.dart';
 import 'package:budding_analyst/model/networkState.dart';
 import 'package:budding_analyst/screens/emailRegister.dart';
 import 'package:budding_analyst/screens/loginScreen.dart';
@@ -40,19 +40,7 @@ class _RegisterUiState extends State<RegisterUi> {
                   onPressed: () async {
                     await NetworkState.state();
                     if (NetworkState.status()) {
-                      if (Platform.isIOS) {
-                        Navigator.pushReplacement(
-                            context,
-                            CupertinoPageRoute(
-                              builder: (context) => EmailRegister(),
-                            ));
-                      } else if (Platform.isAndroid) {
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => EmailRegister(),
-                            ));
-                      }
+                      Mover.move(context, EmailRegister());
                     } else {
                       InternetError(context).show();
                     }
@@ -74,19 +62,7 @@ class _RegisterUiState extends State<RegisterUi> {
                   onPressed: () async {
                     await NetworkState.state();
                     if (NetworkState.status()) {
-                      if (Platform.isIOS) {
-                        Navigator.pushReplacement(
-                            context,
-                            CupertinoPageRoute(
-                              builder: (context) => MobileAuthentication(),
-                            ));
-                      } else if (Platform.isAndroid) {
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => MobileAuthentication(),
-                            ));
-                      }
+                      Mover.move(context, MobileAuthentication());
                     } else {
                       InternetError(context).show();
                     }
@@ -186,19 +162,7 @@ class _RegisterUiState extends State<RegisterUi> {
                       child: Text("Already have an account?",style: TextStyle(color: Colors.black)),
                     ),
                     TextButton(onPressed: (){
-                      if (Platform.isIOS) {
-                        Navigator.pushReplacement(
-                            context,
-                            CupertinoPageRoute(
-                              builder: (context) => LoginScreen(),
-                            ));
-                      } else if (Platform.isAndroid) {
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => LoginScreen(),
-                            ));
-                      }
+                      Mover.move(context, LoginScreen());
                     }, child: Text("Login"))
                   ],
                 ),

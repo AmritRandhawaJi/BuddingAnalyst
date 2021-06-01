@@ -1,4 +1,4 @@
-import 'dart:io';
+import 'package:budding_analyst/model/mover.dart';
 import 'package:budding_analyst/screens/home.dart';
 import 'package:budding_analyst/screens/loginScreen.dart';
 import 'package:budding_analyst/screens/registerUi.dart';
@@ -40,20 +40,7 @@ class _DecisionState extends State<Decision> {
                     flex: 1,
                     child: TextButton(
                         onPressed: () async {
-                          if (Platform.isIOS) {
-                            Navigator.pushReplacement(
-                                context,
-                                CupertinoPageRoute(
-                                  builder: (context) => RegisterUi(),
-                                ));
-                          }
-                          if (Platform.isAndroid) {
-                            Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => Home(),
-                                ));
-                          }
+                          Mover.move(context, Home());
                         },
                         child: Text(
                           "Skip",
@@ -87,7 +74,7 @@ class _DecisionState extends State<Decision> {
               ),
               Container(
                 height: 50,
-                width: MediaQuery.of(context).size.width / 1.8,
+                width: MediaQuery.of(context).size.width / 2.0,
                 decoration: BoxDecoration(
                     color: Colors.grey[300],
                     shape: BoxShape.rectangle,
@@ -98,20 +85,8 @@ class _DecisionState extends State<Decision> {
                     Expanded(
                       child: MaterialButton(
                         onPressed: () {
-                          if (Platform.isIOS) {
-                            Navigator.pushReplacement(
-                                context,
-                                CupertinoPageRoute(
-                                  builder: (context) => LoginScreen(),
-                                ));
-                          }
-                         else if (Platform.isAndroid) {
-                            Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => LoginScreen(),
-                                ));
-                          }
+
+                          Mover.move(context, LoginScreen());
                         },
                         height: 50,
                         child: Text(
@@ -126,20 +101,7 @@ class _DecisionState extends State<Decision> {
                     Expanded(
                       child: MaterialButton(
                         onPressed: () {
-                          if (Platform.isIOS) {
-                            Navigator.pushReplacement(
-                                context,
-                                CupertinoPageRoute(
-                                  builder: (context) => RegisterUi(),
-                                ));
-                          }
-                         else if (Platform.isAndroid) {
-                            Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => RegisterUi(),
-                                ));
-                          }
+                          Mover.move(context, RegisterUi());
                         },
                         child: Text(
                           "Register",

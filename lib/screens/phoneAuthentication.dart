@@ -1,6 +1,5 @@
-import 'dart:io';
+import 'package:budding_analyst/model/mover.dart';
 import 'package:budding_analyst/model/userStateAuthentication.dart';
-import 'package:budding_analyst/screens/registerFormMobile.dart';
 import 'package:budding_analyst/screens/registerUi.dart';
 import 'package:budding_analyst/widgets/indicator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -46,19 +45,7 @@ class _PhoneAuthFirebaseState extends State<PhoneAuthFirebase> {
               children: [
                 TextButton(
                   onPressed: () {
-                    if (Platform.isIOS) {
-                      Navigator.pushReplacement(
-                          context,
-                          CupertinoPageRoute(
-                            builder: (context) => RegisterUi(),
-                          ));
-                    } else if (Platform.isAndroid) {
-                      Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => RegisterUi(),
-                          ));
-                    }
+                    Mover.move(context, RegisterUi());
                   },
                   child: Icon(
                     Icons.close,
@@ -143,7 +130,9 @@ class _PhoneAuthFirebaseState extends State<PhoneAuthFirebase> {
                             ),
                           )
                         : MaterialButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              
+                            },
                             height: 50,
                             color: Colors.grey,
                             disabledTextColor: Colors.white,
@@ -205,11 +194,7 @@ class _PhoneAuthFirebaseState extends State<PhoneAuthFirebase> {
         _loading = true;
         _buttonState = false;
       });
-      Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => UserStateAuthentication(),
-          ));
+      Mover.move(context, UserStateAuthentication());
     } on FirebaseAuthException catch (e) {
       setState(() {
         _loading = false;
@@ -220,7 +205,7 @@ class _PhoneAuthFirebaseState extends State<PhoneAuthFirebase> {
     }
   }
 
-  _signInManual() async {
+  Future<void> _signInManual() async {
     final phoneAuth = PhoneAuthProvider.credential(
         verificationId: _verificationCode, smsCode: otpController.text);
     try {
@@ -229,19 +214,7 @@ class _PhoneAuthFirebaseState extends State<PhoneAuthFirebase> {
         _buttonState = false;
       });
       await FirebaseAuth.instance.signInWithCredential(phoneAuth);
-
-      if (Platform.isIOS)
-        Navigator.pushReplacement(
-            context,
-            CupertinoPageRoute(
-              builder: (context) => UserStateAuthentication(),
-            ));
-      else if (Platform.isAndroid)
-        Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) => UserStateAuthentication(),
-            ));
+      Mover.move(context, UserStateAuthentication());
     } on FirebaseAuthException catch (e) {
       setState(() {
         _loading = false;

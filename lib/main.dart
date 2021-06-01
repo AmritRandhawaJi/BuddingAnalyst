@@ -1,5 +1,7 @@
 import 'package:budding_analyst/model/userState.dart';
+import 'package:budding_analyst/screens/emailLoginUi.dart';
 import 'package:budding_analyst/screens/home.dart';
+import 'package:budding_analyst/screens/registerUi.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -50,6 +52,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
 
     return MaterialApp(
+
         debugShowCheckedModeBanner: false,
       home:  Scaffold(
         body: _result ? Home() : UserState(_state))

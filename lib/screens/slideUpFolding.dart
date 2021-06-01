@@ -1,5 +1,5 @@
-import 'dart:io';
 
+import 'package:budding_analyst/model/mover.dart';
 import 'package:budding_analyst/widgets/indicator.dart';
 import 'package:budding_analyst/screens/loginScreen.dart';
 import 'package:budding_analyst/screens/registerForm.dart';
@@ -48,14 +48,7 @@ class _SlideUpPageState extends State<SlideUpPage> {
       });
       await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: id, password: pass);
-      if(Platform.isIOS)
-        Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) => RegisterForm(),));
-
-      if(Platform.isAndroid)
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => RegisterForm()),
-      );
+      Mover.move(context, RegisterForm());
 
     } on FirebaseAuthException catch (e) {
       setState(() {
@@ -73,7 +66,6 @@ class _SlideUpPageState extends State<SlideUpPage> {
         });
       }
     } catch (e) {
-
       print(e);
       setState(() {
         buttonState = false;
@@ -140,6 +132,8 @@ class _SlideUpPageState extends State<SlideUpPage> {
                   validator: (password) {
                     if (password!.isEmpty) {
                       return "Password required";
+                    }else if (password.length < 8) {
+                      return "Minimum 8 characters required";
                     }
                     else if (passwordResult) {
                       return "Choose Strong password";
@@ -217,7 +211,7 @@ class _SlideUpPageState extends State<SlideUpPage> {
             ),
             Text("Already have an account?"),
             TextButton( onPressed: () {
-              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginScreen(),));
+              Mover.move(context, LoginScreen());
             },
             child: Text("Login",style: TextStyle(fontSize: 14.0,color: Colors.black)),)
           ],

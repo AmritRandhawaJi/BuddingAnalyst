@@ -1,3 +1,4 @@
+import 'package:budding_analyst/model/mover.dart';
 import 'package:budding_analyst/screens/decision.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -19,8 +20,7 @@ class _HomeState extends State<Home> {
             children: [
              MaterialButton(onPressed: ()async {
                await FirebaseAuth.instance.signOut();
-
-               Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Decision(),));
+               Mover.move(context, Decision());
              },child: Text("Sign out"),)
             ],
           ),

@@ -1,5 +1,4 @@
-import 'dart:io';
-
+import 'package:budding_analyst/model/mover.dart';
 import 'package:budding_analyst/widgets/errors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -76,21 +75,9 @@ class _EmailVerificationState extends State<EmailVerification> {
                       .show();
                 }
                 else if (user.emailVerified){
-                if(Platform.isIOS) {
-                  Navigator.pushReplacement(
-                      context,
-                      CupertinoPageRoute(
-                        builder: (context) => Home(),
-                      ));
+                  Mover.move(context, Home());
+                }
 
-                  if (Platform.isAndroid) {
-                    Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Home(),
-                        ));
-                  }
-                }  }
               },
               height: 50.0,
               minWidth: MediaQuery.of(context).size.width / 2,
