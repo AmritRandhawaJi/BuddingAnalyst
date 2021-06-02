@@ -1,9 +1,13 @@
+import 'dart:async';
+import 'dart:io';
+
 import 'package:budding_analyst/model/mover.dart';
 import 'package:budding_analyst/model/userStateAuthentication.dart';
 import 'package:budding_analyst/screens/registerUi.dart';
 import 'package:budding_analyst/widgets/indicator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
@@ -24,50 +28,38 @@ class _PhoneAuthFirebaseState extends State<PhoneAuthFirebase> {
   GlobalKey<FormState> otpKey = GlobalKey();
 
   bool _loading = false;
-
   bool _buttonState = true;
+
 
   @override
   void initState() {
     _mobileAuthFirebase(widget.number);
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Scaffold(backgroundColor: Colors.white,
+        appBar: AppBar(elevation: 0,backgroundColor: Colors.white,
+        leading: Platform.isIOS ? Icon(Icons.arrow_back_ios,color: Colors.black,):Platform.isIOS ? Icon(Icons.arrow_back_ios,color: Colors.black,),),
         body: SafeArea(
       child: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Row(
-              children: [
-                TextButton(
-                  onPressed: () {
-                    Mover.move(context, RegisterUi());
-                  },
-                  child: Icon(
-                    Icons.close,
-                    color: Colors.black,
-                  ),
-                )
-              ],
-            ),
+
             Container(
-                height: MediaQuery.of(context).size.width / 1.5,
-                width: MediaQuery.of(context).size.width / 1.5,
+                height: MediaQuery.of(context).size.width / 2,
+                width: MediaQuery.of(context).size.width / 2,
                 child: Image.asset("assets/mobileHeading.png")),
             SizedBox(
               height: 25,
             ),
-            Center(
-                child: Container(
-              child: _loading ? Indicator() : null,
-            )),
-            SizedBox(
-              height: 10,
-            ),
+           Container(
+             child: Indicator(),
+           ),
+
             Text("An one time password has been sent"),
             SizedBox(
               height: 10,
@@ -170,6 +162,7 @@ class _PhoneAuthFirebaseState extends State<PhoneAuthFirebase> {
   }
 
   Future<void> _mobileAuthFirebase(String number) async {
+
     await FirebaseAuth.instance.verifyPhoneNumber(
       phoneNumber: number,
       verificationCompleted: (PhoneAuthCredential credential) async {
@@ -177,6 +170,7 @@ class _PhoneAuthFirebaseState extends State<PhoneAuthFirebase> {
       },
       timeout: const Duration(seconds: 60),
       verificationFailed: (FirebaseAuthException e) async {
+
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text(e.message.toString())));
       },
@@ -224,4 +218,6 @@ class _PhoneAuthFirebaseState extends State<PhoneAuthFirebase> {
           duration: Duration(seconds: 5), content: Text(e.message.toString())));
     }
   }
+
+
 }

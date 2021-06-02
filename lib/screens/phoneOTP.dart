@@ -77,10 +77,9 @@ class _MobileAuthenticationState extends State<MobileAuthentication> {
                     } else if (value.length < 10) {
 
                       return "Enter 10 digits.";
-                    } else {  setState(() {
-                      check = true;
-                    });
+                    } else {
                       return null;
+
                     }
                   },
                   controller: numberField,
@@ -114,10 +113,7 @@ class _MobileAuthenticationState extends State<MobileAuthentication> {
               ),
             ),
           ),
-          Container(
-              child: check
-                  ? CircularProgressIndicator(valueColor: AlwaysStoppedAnimation(Colors.black))
-                  : null),
+
           SizedBox(
             height: 20.0,
           ),
@@ -131,7 +127,13 @@ class _MobileAuthenticationState extends State<MobileAuthentication> {
           MaterialButton(
             onPressed: () {
               if (phoneAuthKey.currentState!.validate()) {
-                Mover.move(context, PhoneAuthFirebase(numberField.text));
+                String number = countryCode+numberField.text;
+                if (Platform.isIOS) {
+                  Navigator.of(context).push(CupertinoPageRoute(builder: (context) => PhoneAuthFirebase(number),));
+                }
+                else if (Platform.isAndroid) {
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => PhoneAuthFirebase(number),));
+                }
               }
             },
             shape: RoundedRectangleBorder(
