@@ -45,8 +45,15 @@ class _GettingStartedScreenState extends State<GettingStartedScreen> {
                 body: SafeArea(
                   child: Stack(
                     children: [
-
-
+                      Column(
+                        children: [
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Center(child: Text("Budding",style: TextStyle(fontSize: 28,fontFamily: "Trocchi"),)),
+                          Center(child: Text("Analyst",style: TextStyle(fontSize: 26,fontFamily: "Trocchi"),))
+                        ],
+                      ),
                       PageView.builder(
                         controller: _pageController,
                         onPageChanged: _onPageChanged,
@@ -72,7 +79,12 @@ class _GettingStartedScreenState extends State<GettingStartedScreen> {
                                   },
                                   child: Text(
                                     "Back",
-                                    style: TextStyle(color: Colors.black,fontSize:10.sp),
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: SizerUtil.deviceType ==
+                                                DeviceType.tablet
+                                            ? 8.sp
+                                            : 10.sp),
                                   )),
                               Container(
                                 child: Row(
@@ -98,7 +110,12 @@ class _GettingStartedScreenState extends State<GettingStartedScreen> {
                                     children: [
                                       Text(
                                         "Next",
-                                        style: TextStyle(color: Colors.black,fontSize: 10.sp),
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: SizerUtil.deviceType ==
+                                                DeviceType.tablet
+                                                ? 8.sp
+                                                : 10.sp),
                                       ),
                                       Icon(
                                         Icons.arrow_forward_rounded,
@@ -123,7 +140,11 @@ class _GettingStartedScreenState extends State<GettingStartedScreen> {
                         },
                         child: Text(
                           "Get started",
-                          style: TextStyle(color: Colors.white,fontSize: 11.sp),
+                          style:
+                              TextStyle(color: Colors.white, fontSize: SizerUtil.deviceType ==
+                                  DeviceType.tablet
+                                  ? 8.sp
+                                  : 11.sp),
                         ),
                         height: Platform.isIOS ? 60.0 : 50,
                         minWidth: MediaQuery.of(context).size.width,

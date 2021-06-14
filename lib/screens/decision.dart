@@ -21,106 +21,101 @@ class _DecisionState extends State<Decision> {
       builder: (context, orientation, deviceType) => Scaffold(
         backgroundColor: Colors.white,
         body: SafeArea(
-          child: Container(
-            height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    flex: 3,
+                    child: Column(
+                      children: [
+                        Center(child: Text("Budding",style: TextStyle(fontSize: 32,fontFamily: "Trocchi"),)),
+                        Center(child: Text("Analyst",style: TextStyle(fontSize: 30,fontFamily: "Trocchi"),))
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: TextButton(
+                        onPressed: () async {
+                          Mover.move(context, Home());
+                        },
+                        child: Text(
+                          "Skip"
+                        )),
+                  ),
+                ],
+              ),
+              Container(
+                width: MediaQuery.of(context).size.width / 1.5,
+                child: Text(
+                  "Our world of Analysis",
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 32,
+                      fontFamily: "Arvo",),
+                ),
+              ),
+              Container(
+                width: MediaQuery.of(context).size.width / 1.3,
+                child: Text(
+                  "We aim to provide an integrated platform for varied communities of analysts coming from different disciplines to share their wisdom with the idea of promoting innovation and learning.",
+                  style: TextStyle(
+                      height: 1.5,
+                      color: Colors.black,
+                      fontSize: 14,
+                      fontFamily: "Arvo",
+                      fontWeight: FontWeight.w400),
+                ),
+              ),
+              Container(
+                height: 50,
+                width: MediaQuery.of(context).size.width / 2.0,
+                decoration: BoxDecoration(
+                    color: Colors.grey[300],
+                    shape: BoxShape.rectangle,
+                    borderRadius: BorderRadius.all(Radius.circular(30.0))),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Expanded(
-                      flex: 3,
-                      child: Center(
-                          child: Image.asset(
-                        "assets/heading.png",
-                        width: MediaQuery.of(context).size.width / 2.2,
-                      )),
+                      child: MaterialButton(
+                        onPressed: () {
+
+                          Mover.move(context, LoginScreen());
+                        },
+                        height: 50,
+                        child: Text(
+                          "Login",
+                          style: TextStyle(color: Colors.black),
+                        ),
+                        shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(30.0))),
+                      ),
                     ),
                     Expanded(
-                      flex: 1,
-                      child: TextButton(
-                          onPressed: () async {
-                            Mover.move(context, Home());
-                          },
-                          child: Text(
-                            "Skip",
-                            style: TextStyle(color: Colors.black),
-                          )),
+                      child: MaterialButton(
+                        onPressed: () {
+                          Mover.move(context, RegisterUi());
+                        },
+                        child: Text(
+                          "Register",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(30.0))),
+                        color: Colors.black,
+                        height: 50,
+                      ),
                     ),
                   ],
                 ),
-                Container(
-                  width: MediaQuery.of(context).size.width / 1.5,
-                  child: Text(
-                    "Our world of Analysis",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 32,
-                        fontFamily: "Arvo",
-                        fontWeight: FontWeight.w700),
-                  ),
-                ),
-                Container(
-                  width: MediaQuery.of(context).size.width / 1.3,
-                  child: Text(
-                    "We aim to provide an integrated platform for varied communities of analysts coming from different disciplines to share their wisdom with the idea of promoting innovation and learning.",
-                    style: TextStyle(
-                        height: 1.5,
-                        color: Colors.black,
-                        fontSize: 14,
-                        fontFamily: "Arvo",
-                        fontWeight: FontWeight.w400),
-                  ),
-                ),
-                Container(
-                  height: 50,
-                  width: MediaQuery.of(context).size.width / 2.0,
-                  decoration: BoxDecoration(
-                      color: Colors.grey[300],
-                      shape: BoxShape.rectangle,
-                      borderRadius: BorderRadius.all(Radius.circular(30.0))),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: MaterialButton(
-                          onPressed: () {
-
-                            Mover.move(context, LoginScreen());
-                          },
-                          height: 50,
-                          child: Text(
-                            "Login",
-                            style: TextStyle(color: Colors.black),
-                          ),
-                          shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(30.0))),
-                        ),
-                      ),
-                      Expanded(
-                        child: MaterialButton(
-                          onPressed: () {
-                            Mover.move(context, RegisterUi());
-                          },
-                          child: Text(
-                            "Register",
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(30.0))),
-                          color: Colors.black,
-                          height: 50,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
