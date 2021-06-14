@@ -10,6 +10,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sizer/sizer.dart';
 
 class GettingStartedScreen extends StatefulWidget {
   @override
@@ -37,101 +38,96 @@ class _GettingStartedScreenState extends State<GettingStartedScreen> {
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
     ]);
-    return Scaffold(
-        body: SafeArea(
-          child: Stack(
-            children: [
-              Column(
-                children: [
-                  Hero(
-                      tag: "headingTag",
-                      child: Center(
-                          child: Image.asset(
-                        "assets/heading.png",
-                        width: 100,
-                        height: 100,
-                      ))),
-                ],
-              ),
-              PageView.builder(
-                controller: _pageController,
-                onPageChanged: _onPageChanged,
-                itemCount: slideList.length,
-                itemBuilder: (ctx, i) => SlideItem(i),
-              ),
-            ],
-          ),
-        ),
-        bottomSheet: _currentPage != slideList.length - 1
-            ? Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Container(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Sizer(
+        builder: (BuildContext context, Orientation orientation,
+                DeviceType deviceType) =>
+            Scaffold(
+                body: SafeArea(
+                  child: Stack(
                     children: [
-                      TextButton(
-                          onPressed: () {
-                            _pageController.animateToPage(_currentPage - 1,
-                                duration: Duration(milliseconds: 250),
-                                curve: Curves.easeIn);
-                          },
-                          child: Text(
-                            "Back",
-                            style: TextStyle(color: Colors.black),
-                          )),
-                      Container(
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            for (int i = 0; i < slideList.length; i++)
-                              if (i == _currentPage)
-                                SlideDots(true)
-                              else
-                                SlideDots(false)
-                          ],
-                        ),
+
+
+                      PageView.builder(
+                        controller: _pageController,
+                        onPageChanged: _onPageChanged,
+                        itemCount: slideList.length,
+                        itemBuilder: (ctx, i) => SlideItem(i),
                       ),
-                      TextButton(
-                          onPressed: () {
-                            _pageController.animateToPage(_currentPage + 1,
-                                duration: Duration(milliseconds: 250),
-                                curve: Curves.easeIn);
-                          },
-                          child: Row(
-                            children: [
-                              Text(
-                                "Next",
-                                style: TextStyle(color: Colors.black),
-                              ),
-                              Icon(
-                                Icons.arrow_forward_rounded,
-                                color: Colors.black,
-                              )
-                            ],
-                          )),
                     ],
                   ),
                 ),
-              )
-            : MaterialButton(
-                onPressed: () async {
-                  await NetworkState.state();
-                  if (NetworkState.status()) {
-                    final data = await SharedPreferences.getInstance();
-                    data.setInt("userState", 1);
-                    Mover.move(context,Decision());
-                  } else {
-                      InternetError(context).show();
-                  }
-                },
-                child: Text(
-                  "Get started",
-                  style: TextStyle(color: Colors.white),
-                ),
-                height: Platform.isIOS ? 60.0 : 50,
-                minWidth: MediaQuery.of(context).size.width,
-                color: Colors.indigoAccent,
-              ));
+                bottomSheet: _currentPage != slideList.length - 1
+                    ? Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Container(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              TextButton(
+                                  onPressed: () {
+                                    _pageController.animateToPage(
+                                        _currentPage - 1,
+                                        duration: Duration(milliseconds: 250),
+                                        curve: Curves.easeIn);
+                                  },
+                                  child: Text(
+                                    "Back",
+                                    style: TextStyle(color: Colors.black,fontSize:10.sp),
+                                  )),
+                              Container(
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    for (int i = 0; i < slideList.length; i++)
+                                      if (i == _currentPage)
+                                        SlideDots(true)
+                                      else
+                                        SlideDots(false)
+                                  ],
+                                ),
+                              ),
+                              TextButton(
+                                  onPressed: () {
+                                    _pageController.animateToPage(
+                                        _currentPage + 1,
+                                        duration: Duration(milliseconds: 250),
+                                        curve: Curves.easeIn);
+                                  },
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        "Next",
+                                        style: TextStyle(color: Colors.black,fontSize: 10.sp),
+                                      ),
+                                      Icon(
+                                        Icons.arrow_forward_rounded,
+                                        color: Colors.black,
+                                      )
+                                    ],
+                                  )),
+                            ],
+                          ),
+                        ),
+                      )
+                    : MaterialButton(
+                        onPressed: () async {
+                          await NetworkState.state();
+                          if (NetworkState.status()) {
+                            final data = await SharedPreferences.getInstance();
+                            data.setInt("userState", 1);
+                            Mover.move(context, Decision());
+                          } else {
+                            InternetError(context).show();
+                          }
+                        },
+                        child: Text(
+                          "Get started",
+                          style: TextStyle(color: Colors.white,fontSize: 11.sp),
+                        ),
+                        height: Platform.isIOS ? 60.0 : 50,
+                        minWidth: MediaQuery.of(context).size.width,
+                        color: Colors.indigoAccent,
+                      )));
   }
 }
