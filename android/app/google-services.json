@@ -15,11 +15,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "490183939357-re53mertv3jq7m5orrap5hm8a152ffa2.apps.googleusercontent.com",
+          "client_id": "490183939357-dos6tp3riqesdf0up58vmeqffp0ks0tj.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.buddinganalyst.budding_analyst",
-            "certificate_hash": "6d29ed0bc7f17a62b8b1dd58f1702a4b1fd71158"
+            "certificate_hash": "254e6186306d0a19a7eaed8f9cb7e192f97b73c1"
           }
         },
         {

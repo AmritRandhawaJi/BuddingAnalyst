@@ -7,7 +7,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
-import 'package:sizer/sizer.dart';
 
 class PhoneAuthFirebase extends StatefulWidget {
   final String number;
@@ -35,133 +34,105 @@ class _PhoneAuthFirebaseState extends State<PhoneAuthFirebase> {
 
   @override
   Widget build(BuildContext context) {
-    return Sizer(
-      builder: (BuildContext context, Orientation orientation,
-          DeviceType deviceType) {
-        return Scaffold(
+    return  Scaffold(
           body: SafeArea(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                      height: 10,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Container(
+                    height: MediaQuery.of(context).size.width / 2,
+                    width: MediaQuery.of(context).size.width / 2,
+                    child: Image.asset("assets/mobileHeading.png")),
+
+                Container(
+                  child: Indicator(),
+                ),
+                Text("An one time password has been sent"),
+
+                Text(
+                  widget.number,
+                  style: TextStyle(color: Colors.black87),
+                ),
+
+                Padding(
+                  padding: const EdgeInsets.only(left: 25, right: 25),
+                  child: Form(
+                    key: otpKey,
+                    child: PinCodeTextField(
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return "Enter otp";
+                        } else if (value.length != 6) {
+                          return "Enter 6 digits otp";
+                        } else {
+                          return null;
+                        }
+                      },
+                      controller: otpController,
+                      keyboardType: TextInputType.number,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.digitsOnly
+                      ],
+                      appContext: context,
+                      length: 6,
+                      onChanged: (String value) {},
                     ),
-                      Container(
-                          height: MediaQuery.of(context).size.width / 2,
-                          width: MediaQuery.of(context).size.width / 2,
-                          child: Image.asset("assets/mobileHeading.png")),
-                      SizedBox(
-                        height: 25,
-                      ),
-                      Container(
-                        child: Indicator(),
-                      ),
-                      Text("An one time password has been sent"),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        widget.number,
-                        style: TextStyle(color: Colors.black87),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 25, right: 25),
-                        child: Form(
-                          key: otpKey,
-                          child: PinCodeTextField(
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return "Enter otp";
-                              } else if (value.length != 6) {
-                                return "Enter 6 digits otp";
-                              } else {
-                                return null;
+                  ),
+                ),
+
+                Center(
+                  child: Container(
+                    child: _buttonState
+                        ? MaterialButton(
+                            onPressed: () async {
+                              if (otpKey.currentState!.validate()) {
+                                _signInManual();
+                                setState(() {
+                                  _buttonState = false;
+                                });
                               }
                             },
-                            controller: otpController,
-                            keyboardType: TextInputType.number,
-                            inputFormatters: [
-                              FilteringTextInputFormatter.digitsOnly
-                            ],
-                            appContext: context,
-                            length: 6,
-                            onChanged: (String value) {},
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 25,
-                      ),
-                      Column(
-                        children: [
-                          Center(
-                            child: Container(
-                              child: _buttonState
-                                  ? MaterialButton(
-                                      onPressed: () async {
-                                        if (otpKey.currentState!.validate()) {
-                                          _signInManual();
-                                          setState(() {
-                                            _buttonState = false;
-                                          });
-                                        }
-                                      },
-                                      height: 50,
-                                      color: Colors.black,
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(10)),
-                                      child: Text(
-                                        "Proceed",
-                                        style: TextStyle(color: Colors.white),
-                                      ),
-                                    )
-                                  : MaterialButton(
-                                      onPressed: () {},
-                                      height: 50,
-                                      color: Colors.grey,
-                                      disabledTextColor: Colors.white,
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(10)),
-                                      child: Text(
-                                        "Proceed",
-                                        style: TextStyle(color: Colors.white),
-                                      ),
-                                    ),
+                            height: 50,
+                            color: Colors.black,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10)),
+                            child: Text(
+                              "Proceed",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          )
+                        : MaterialButton(
+                            onPressed: () {},
+                            height: 50,
+                            color: Colors.grey,
+                            disabledTextColor: Colors.white,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10)),
+                            child: Text(
+                              "Proceed",
+                              style: TextStyle(color: Colors.white),
                             ),
                           ),
-                          SizedBox(
-                            height: 40.0,
-                          ),
-                          Column(
-                            children: [
-                              Text("Didn't get code?",
-                                  style: TextStyle(color: Colors.black)),
-                              TextButton(
-                                  onPressed: () {
-                                    _mobileAuthFirebase(widget.number);
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                        SnackBar(content: Text("OTP Resend")));
-                                  },
-                                  child: Text("Resend"))
-                            ],
-                          ),
-                        ],
-                      )
-                    ],
                   ),
-                ],
-              ),
+                ),
+
+                Column(
+                  children: [
+                    Text("Didn't get code?",
+                        style: TextStyle(color: Colors.black)),
+                    TextButton(
+                        onPressed: () {
+                          _mobileAuthFirebase(widget.number);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text("OTP Resend")));
+                        },
+                        child: Text("Resend"))
+                  ],
+                ),
+              ],
             ),
           ),
         );
-      },
-    );
   }
 
   Future<void> _mobileAuthFirebase(String number) async {

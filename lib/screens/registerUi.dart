@@ -28,14 +28,14 @@ class _RegisterUiState extends State<RegisterUi> {
                 child: Column(
                   children: [
                     Container(
-                      width: 40.w,
+                      width: 60.w,
                       height: 30.h,
                       child: Hero(tag: "headingTag",
                       child: Image.asset("assets/register.png")),
                     ),
                     Text(
                       "Let's create account",
-                      style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
+                      style: TextStyle(fontSize: deviceType == DeviceType.tablet ? 30 : 24, fontWeight: FontWeight.bold),
                     ),
                     SizedBox(
                       height: 10,
@@ -57,7 +57,7 @@ class _RegisterUiState extends State<RegisterUi> {
                           borderRadius: BorderRadius.circular(15.0)),
                       color: Colors.black,
                       minWidth: MediaQuery.of(context).size.width / 1.2,
-                      height: 50,
+                      height: deviceType == DeviceType.tablet ? 60 : 50,
                     ),
                     SizedBox(
                       height: 10,
@@ -79,7 +79,7 @@ class _RegisterUiState extends State<RegisterUi> {
                           borderRadius: BorderRadius.circular(15.0)),
                       color: Colors.black,
                       minWidth: MediaQuery.of(context).size.width / 1.2,
-                      height: 50,
+                      height: deviceType == DeviceType.tablet ? 60 : 50,
                     ),
                     Row(children: <Widget>[
                       Expanded(
@@ -87,7 +87,7 @@ class _RegisterUiState extends State<RegisterUi> {
                             margin: const EdgeInsets.only(left: 10.0, right: 15.0),
                             child: Divider(
                               color: Colors.black,
-                              height: 50,
+                              height: deviceType == DeviceType.tablet ? 60.0 : 50,
                             )),
                       ),
                       Text("OR"),
@@ -96,7 +96,7 @@ class _RegisterUiState extends State<RegisterUi> {
                             margin: const EdgeInsets.only(left: 15.0, right: 10.0),
                             child: Divider(
                               color: Colors.black,
-                              height: 50,
+                              height: deviceType == DeviceType.tablet ? 60 : 50,
                             )),
                       ),
                     ]),
@@ -105,15 +105,14 @@ class _RegisterUiState extends State<RegisterUi> {
                       child: Container(
                         width: MediaQuery.of(context).size.width / 1.5,
                         child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Icon(
                               MyFlutterApp.google,
                               color: Colors.blue,
                             ),
-                            SizedBox(
-                              width: 42,
-                            ),
+
                             Text(
                               "Continue with google",
                             ),
@@ -124,7 +123,7 @@ class _RegisterUiState extends State<RegisterUi> {
                           borderRadius: BorderRadius.circular(15.0)),
                       color: Colors.white,
                       minWidth: MediaQuery.of(context).size.width / 1.2,
-                      height: 50,
+                      height: deviceType == DeviceType.tablet ? 60 : 50,
                     ),
                     SizedBox(
                       height: 10,
@@ -136,14 +135,12 @@ class _RegisterUiState extends State<RegisterUi> {
                       child: Container(
                         width: MediaQuery.of(context).size.width / 1.5,
                         child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Icon(
                               MyFlutterApp.facebook,
                               color: Colors.blue,
-                            ),
-                            SizedBox(
-                              width: 40,
                             ),
                             Text(
                               "Continue with facebook",
@@ -155,7 +152,7 @@ class _RegisterUiState extends State<RegisterUi> {
                           borderRadius: BorderRadius.circular(15.0)),
                       color: Colors.white,
                       minWidth: MediaQuery.of(context).size.width / 1.2,
-                      height: 50,
+                      height: deviceType == DeviceType.tablet ? 60 : 50,
                     ),
                     SizedBox(
                       height: 20.0,

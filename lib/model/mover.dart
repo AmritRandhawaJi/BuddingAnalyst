@@ -15,10 +15,10 @@ class Mover {
   }
  static void moveCanPop(BuildContext context, Widget screen){
    if (Platform.isIOS) {
-     Navigator.of(context).push(CupertinoPageRoute(builder: (context) => screen,));
+     Navigator.of(context).pushReplacement(CupertinoPageRoute(builder: (context) => screen,));
    }
    else if (Platform.isAndroid) {
-     Navigator.of(context).push(MaterialPageRoute(builder: (context) => screen,));
+     Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => screen,));
    }
  }
 }

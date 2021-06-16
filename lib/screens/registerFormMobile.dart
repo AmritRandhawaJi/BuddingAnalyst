@@ -50,270 +50,255 @@ class _RegisterFormMobileState extends State<RegisterFormMobile> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-          body: SingleChildScrollView(
-        child: Column(children: [
-          SizedBox(
-            height: 20.0,
-          ),
-          Text(
-            "Almost Done!",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22.0),
-          ),
-          Column(
-            children: [
-              Container(
-                child: Image.asset("assets/formHeading.png"),
-                width: MediaQuery.of(context).size.width / 1.5,
-                height: MediaQuery.of(context).size.height / 3.5,
-              ),
-            ],
-          ),
-          Text(
-            "What's your name?",
-            style: TextStyle(color: Colors.blue),
-          ),
-          SizedBox(
-            height: 20.0,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Form(
-                    key: firstNameKey,
-                    child: TextFormField(
-                      keyboardType: TextInputType.name,
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return "Enter first name";
-                        } else {
-                          return null;
-                        }
-                      },
-                      autofillHints: [AutofillHints.name],
-                      controller: firstNameController,
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          filled: true,
-                          fillColor: Colors.white,
-                          hintStyle: TextStyle(color: Colors.black),
-                          labelText: "First Name",
-                          labelStyle: TextStyle(color: Colors.black)),
+          body: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+            Text(
+              "Almost Done!",
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22.0),
+            ),
+            Column(
+              children: [
+                Container(
+                  child: Image.asset("assets/formHeading.png"),
+                  width: MediaQuery.of(context).size.width / 1.5,
+                  height: MediaQuery.of(context).size.height / 3.5,
+                ),
+              ],
+            ),
+            Text(
+              "What's your name?",
+              style: TextStyle(color: Colors.blue),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Form(
+                      key: firstNameKey,
+                      child: TextFormField(
+                        keyboardType: TextInputType.name,
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return "Enter first name";
+                          } else {
+                            return null;
+                          }
+                        },
+                        autofillHints: [AutofillHints.name],
+                        controller: firstNameController,
+                        decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            filled: true,
+                            fillColor: Colors.white,
+                            hintStyle: TextStyle(color: Colors.black),
+                            labelText: "First Name",
+                            labelStyle: TextStyle(color: Colors.black)),
+                      ),
                     ),
                   ),
                 ),
-              ),
-              SizedBox(
-                width: 10,
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Form(
-                    key: lastNameKey,
-                    child: TextFormField(
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return "Enter last name";
-                        } else {
-                          return null;
-                        }
-                      },
-                      controller: lastNameController,
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          filled: true,
-                          fillColor: Colors.white,
-                          hintStyle: TextStyle(color: Colors.black),
-                          labelText: "Last Name",
-                          labelStyle: TextStyle(color: Colors.black)),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Form(
+                      key: lastNameKey,
+                      child: TextFormField(
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return "Enter last name";
+                          } else {
+                            return null;
+                          }
+                        },
+                        controller: lastNameController,
+                        decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            filled: true,
+                            fillColor: Colors.white,
+                            hintStyle: TextStyle(color: Colors.black),
+                            labelText: "Last Name",
+                            labelStyle: TextStyle(color: Colors.black)),
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Form(
-              key: emailKey,
-              child: TextFormField(
-                keyboardType: TextInputType.emailAddress,
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return "Enter email";
-                  } else if (!EmailValidator.validate(value)) {
-                    return "Email invalid";
-                  } else {
-                    return null;
-                  }
-                },
-                autofillHints: [AutofillHints.name],
-                controller: emailController,
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    filled: true,
-                    fillColor: Colors.white,
-                    hintStyle: TextStyle(color: Colors.black),
-                    labelText: "Email",
-                    labelStyle: TextStyle(color: Colors.black)),
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Form(
+                key: emailKey,
+                child: TextFormField(
+                  keyboardType: TextInputType.emailAddress,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return "Enter email";
+                    } else if (!EmailValidator.validate(value)) {
+                      return "Email invalid";
+                    } else {
+                      return null;
+                    }
+                  },
+                  autofillHints: [AutofillHints.name],
+                  controller: emailController,
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      filled: true,
+                      fillColor: Colors.white,
+                      hintStyle: TextStyle(color: Colors.black),
+                      labelText: "Email",
+                      labelStyle: TextStyle(color: Colors.black)),
+                ),
               ),
             ),
-          ),
-          SizedBox(height: 20),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(
-              decoration: BoxDecoration(
-                  color: Colors.amberAccent[100],
-                  borderRadius: BorderRadius.all(Radius.circular(10.0))),
-              child: Column(
-                children: [
-                  Center(
-                      child: Text(
-                    "Select gender",
-                    style: TextStyle(color: Colors.black),
-                  )),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        width: MediaQuery.of(context).size.width / 2.5,
-                        child: ListTile(
-                          title: const Text('Male'),
-                          leading: Radio(
-                            value: "Male",
-                            groupValue: _gender,
-                            onChanged: (value) {
-                              setState(() {
-                                _gender = value.toString();
-                              });
-                            },
+
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                decoration: BoxDecoration(
+                    color: Colors.amberAccent[100],
+                    borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                child: Column(
+                  children: [
+                    Center(
+                        child: Text(
+                      "Select gender",
+                      style: TextStyle(color: Colors.black),
+                    )),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: MediaQuery.of(context).size.width / 2.5,
+                          child: ListTile(
+                            title: const Text('Male'),
+                            leading: Radio(
+                              value: "Male",
+                              groupValue: _gender,
+                              onChanged: (value) {
+                                setState(() {
+                                  _gender = value.toString();
+                                });
+                              },
+                            ),
                           ),
                         ),
-                      ),
-                      Container(
-                        width: MediaQuery.of(context).size.width / 2.5,
-                        child: ListTile(
-                          title: const Text('Female'),
-                          leading: Radio(
-                            value: "Female",
-                            groupValue: _gender,
-                            onChanged: (value) {
-                              setState(() {
-                                _gender = value.toString();
-                              });
-                            },
+                        Container(
+                          width: MediaQuery.of(context).size.width / 2.5,
+                          child: ListTile(
+                            title: const Text('Female'),
+                            leading: Radio(
+                              value: "Female",
+                              groupValue: _gender,
+                              onChanged: (value) {
+                                setState(() {
+                                  _gender = value.toString();
+                                });
+                              },
+                            ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-          SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                "My age is",
-                style: TextStyle(fontSize: 16),
-              ),
-              Text(
-                " $_age",
-                style: TextStyle(fontSize: 20, color: Colors.blue),
-              )
-            ],
-          ),
-          SizedBox(height: 20),
-          Container(
-            width: MediaQuery.of(context).size.width / 4,
-            child: Platform.isIOS
-                ? CupertinoPicker(
-                    itemExtent: 30,
-                    onSelectedItemChanged: (value) {
-                      int data = value + 18;
-                      setState(() {
-                        _age = data;
-                      });
-                    },
-                    children: [
-                        for (int i = 18; i <= 70; i++) Text("$i"),
-                      ])
-                : Form(
-                    key: ageKey,
-                    child: DropdownButtonFormField<String>(
-                      validator: (value) {
-                        if (value != null) {
-                          return null;
-                        } else {
-                          return "Select age";
-                        }
-                      },
-                      onChanged: (value) {
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "My age is",
+                  style: TextStyle(fontSize: 16),
+                ),
+                Text(
+                  " $_age",
+                  style: TextStyle(fontSize: 20, color: Colors.blue),
+                )
+              ],
+            ),
+
+            Container(
+              width: MediaQuery.of(context).size.width / 4,
+              child: Platform.isIOS
+                  ? CupertinoPicker(
+                      itemExtent: 30,
+                      onSelectedItemChanged: (value) {
+                        int data = value + 18;
                         setState(() {
-                          _age = value;
+                          _age = data;
                         });
                       },
-                      value: _age,
-                      //elevation: 5,
-                      style: TextStyle(color: Colors.black),
+                      children: [
+                          for (int i = 18; i <= 70; i++) Text("$i"),
+                        ])
+                  : Form(
+                      key: ageKey,
+                      child: DropdownButtonFormField<String>(
+                        validator: (value) {
+                          if (value != null) {
+                            return null;
+                          } else {
+                            return "Select age";
+                          }
+                        },
+                        onChanged: (value) {
+                          setState(() {
+                            _age = value;
+                          });
+                        },
+                        value: _age,
+                        //elevation: 5,
+                        style: TextStyle(color: Colors.black),
 
-                      items: SpinnerData.spinnerItems
-                          .map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                      hint: Text(
-                        "Age?",
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600),
+                        items: SpinnerData.spinnerItems
+                            .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                        hint: Text(
+                          "Age?",
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600),
+                        ),
                       ),
                     ),
-                  ),
-          ),
-          SizedBox(
-            height: 25.0,
-          ),
-          MaterialButton(
-            onPressed: () {
-              if (firstNameKey.currentState!.validate() &
-                  lastNameKey.currentState!.validate() &
-                  ageKey.currentState!.validate() &
-                  emailKey.currentState!.validate()) {
-                _createDatabase();
-              }
-            },
-            child: Text(
-              "Next",
-              style: TextStyle(color: Colors.white),
             ),
-            minWidth: MediaQuery.of(context).size.width / 3,
-            color: Colors.blue,
-            height: 50.0,
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-          ),
-          SizedBox(
-            height: 10.0,
-          ),
-          Container(
-            child: loading ? Indicator() : null,
-          ),
-          SizedBox(
-            height: 10,
-          )
-        ]),
-      )),
+            MaterialButton(
+              onPressed: () {
+                if (firstNameKey.currentState!.validate() &
+                    lastNameKey.currentState!.validate() &
+                    ageKey.currentState!.validate() &
+                    emailKey.currentState!.validate()) {
+                  _createDatabase();
+                }
+              },
+              child: Text(
+                "Next",
+                style: TextStyle(color: Colors.white),
+              ),
+              minWidth: MediaQuery.of(context).size.width / 3,
+              color: Colors.blue,
+              height: 50.0,
+              shape:
+                  RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            ),
+            Container(
+              child: loading ? Indicator() : null,
+            ),
+            SizedBox(
+              height: 10,
+            )
+          ])),
     );
   }
 

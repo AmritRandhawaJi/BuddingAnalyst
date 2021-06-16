@@ -31,8 +31,8 @@ class _DecisionState extends State<Decision> {
                     flex: 3,
                     child: Column(
                       children: [
-                        Center(child: Text("Budding",style: TextStyle(fontSize: 32,fontFamily: "Trocchi"),)),
-                        Center(child: Text("Analyst",style: TextStyle(fontSize: 30,fontFamily: "Trocchi"),))
+                        Center(child: Text("Budding",style: TextStyle(fontSize: deviceType == DeviceType.tablet ? 40 :32,fontFamily: "Trocchi"),)),
+                        Center(child: Text("Analyst",style: TextStyle(fontSize: deviceType == DeviceType.tablet ? 38 :30,fontFamily: "Trocchi"),))
                       ],
                     ),
                   ),
@@ -52,9 +52,9 @@ class _DecisionState extends State<Decision> {
                 width: MediaQuery.of(context).size.width / 1.5,
                 child: Text(
                   "Our world of Analysis",
-                  style: TextStyle(
+                  style: TextStyle(fontWeight: FontWeight.bold,
                       color: Colors.black,
-                      fontSize: 32,
+                      fontSize: deviceType == DeviceType.tablet ? 40 : 32,
                       fontFamily: "Arvo",),
                 ),
               ),
@@ -65,13 +65,13 @@ class _DecisionState extends State<Decision> {
                   style: TextStyle(
                       height: 1.5,
                       color: Colors.black,
-                      fontSize: 14,
+                      fontSize: deviceType == DeviceType.tablet ? 18 :14,
                       fontFamily: "Arvo",
                       fontWeight: FontWeight.w400),
                 ),
               ),
               Container(
-                height: 50,
+                height: deviceType == DeviceType.tablet ? 60 :50,
                 width: MediaQuery.of(context).size.width / 2.0,
                 decoration: BoxDecoration(
                     color: Colors.grey[300],
@@ -86,7 +86,7 @@ class _DecisionState extends State<Decision> {
 
                           Mover.move(context, LoginScreen());
                         },
-                        height: 50,
+                        height: deviceType == DeviceType.tablet ? 60 :50,
                         child: Text(
                           "Login",
                           style: TextStyle(color: Colors.black),
@@ -109,7 +109,7 @@ class _DecisionState extends State<Decision> {
                             borderRadius:
                                 BorderRadius.all(Radius.circular(30.0))),
                         color: Colors.black,
-                        height: 50,
+                        height: deviceType == DeviceType.tablet ? 60 :50,
                       ),
                     ),
                   ],

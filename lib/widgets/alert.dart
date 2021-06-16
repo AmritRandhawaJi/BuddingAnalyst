@@ -1,19 +1,16 @@
-
 import 'dart:io';
 
-import 'package:budding_analyst/screens/home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class Error{
-  BuildContext context;
-  String title;
+class Alerts{
+
   String content;
-  String errorRight;
-  String errorLeft;
+  String title;
+  BuildContext context;
 
 
-  Error(this.context, this.title,this.content, this.errorRight, this.errorLeft);
+  Alerts(this.content, this.title, this.context);
 
   void show(){
     if(Platform.isIOS){
@@ -22,31 +19,26 @@ class Error{
       showDialog(context: context, builder: (context) => alert(),barrierDismissible: false);
     }
   }
+
   Widget alert(){
     return Platform.isIOS ? CupertinoAlertDialog(
       content: Text(content),
       title: Text(title),
       actions: [
         TextButton(onPressed: (){
-          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Home(),));
-        }, child: Text(errorLeft)),
-        TextButton(onPressed: (){
           Navigator.pop(context);
-        }, child: Text(errorRight))
+        }, child: Text("Ok")),
+
       ],
     ):AlertDialog(
       title: Text(title),
       content: Text(content),
       actions: [
         TextButton(onPressed: (){
-          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Home(),));
-        }, child: Text(errorLeft)),
-        TextButton(onPressed: (){
           Navigator.pop(context);
-        }, child: Text(errorRight))
+        }, child: Text("Ok"))
       ],
     );
   }
-
 
 }
