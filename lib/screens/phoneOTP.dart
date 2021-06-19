@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:budding_analyst/model/mover.dart';
 import 'package:budding_analyst/screens/phoneAuthentication.dart';
 import 'package:budding_analyst/screens/registerUi.dart';
 import 'package:country_code_picker/country_code_picker.dart';
@@ -37,7 +36,13 @@ class _MobileAuthenticationState extends State<MobileAuthentication> {
               children: [
                 TextButton(
                   onPressed: () {
-                    Mover.move(context, RegisterUi());
+                    if (Platform.isIOS) {
+                      Navigator.of(context).pushReplacement(CupertinoPageRoute(builder: (context) => RegisterUi(),));
+                    }
+                    else if (Platform.isAndroid) {
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => RegisterUi(),));
+                    }
+
                   },
                   child: Icon(
                     Icons.close,

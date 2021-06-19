@@ -1,6 +1,9 @@
-import 'package:budding_analyst/model/mover.dart';
+import 'dart:io';
+
 import 'package:budding_analyst/screens/decision.dart';
+import 'package:budding_analyst/widgets/alert.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -18,14 +21,25 @@ class _ForgetPasswordState extends State<ForgetPassword> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
+      backgroundColor: Colors.blueGrey,
       body: SafeArea(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Row(
               children: [
                 TextButton(
                   onPressed: () {
-                    Mover.move(context, Decision());
+                    if (Platform.isIOS) {
+                      Navigator.of(context).pushReplacement(CupertinoPageRoute(
+                        builder: (context) => Decision(),
+                      ));
+                    } else if (Platform.isAndroid) {
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (context) => Decision(),
+                      ));
+                    }
                   },
                   child: Icon(
                     Icons.close,
@@ -33,6 +47,11 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                   ),
                 ),
               ],
+            ),
+            Container(
+              child: Image.asset("assets/headingWhite.png"),
+              width: MediaQuery.of(context).size.width / 1.5,
+              height: MediaQuery.of(context).size.height / 3.5,
             ),
             Form(
               key: stateKey,
@@ -68,22 +87,34 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                         },
                       ),
                       prefixIcon: Icon(Icons.email_outlined),
-                      labelText: "Email",
+                      labelText: "Enter your email",
                       labelStyle: TextStyle(color: Colors.black)),
                 ),
               ),
             ),
-            SizedBox(
-              height: 30,
-            ),
+
+            Container(
+                width: MediaQuery.of(context).size.width / 1.5,
+                child: Text(
+                  "Forget password? don't worry we'll assist you.",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: "Ubuntu"),
+                )),
+
             MaterialButton(
               onPressed: buttonState
                   ? null
                   : () async {
                       if (stateKey.currentState!.validate()) {
                         setState(() {
-                          buttonState = true;
+                          buttonState = false;
                         });
+                        FirebaseAuth.instance.sendPasswordResetEmail(email: emailController.text);
+                       Alerts("We have sent an email please follow steps to reset password.","Email Reset",context).show();
+
                       }
                     },
               child: Text(
@@ -99,9 +130,26 @@ class _ForgetPasswordState extends State<ForgetPassword> {
               height: 40.0,
               minWidth: MediaQuery.of(context).size.width / 2,
             ),
+            Text(
+              "Need more help?",
+              style: TextStyle(color: Colors.white),
+            ),
+            TextButton(
+                onPressed: () {
+                  Alerts(
+                    "Write your concern at Helpdesk@buddinganalyst.com",
+                    "Customer Support",
+                    context,
+                  ).show();
+                },
+                child: Text("Customer support",
+                    style: TextStyle(color: Colors.white)))
           ],
         ),
       ),
     );
+  }
+  _userAvailability(){
+
   }
 }

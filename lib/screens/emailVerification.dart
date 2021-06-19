@@ -1,4 +1,5 @@
-import 'package:budding_analyst/model/mover.dart';
+import 'dart:io';
+
 import 'package:budding_analyst/widgets/alert.dart';
 import 'package:budding_analyst/widgets/errors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -71,7 +72,13 @@ class _EmailVerificationState extends State<EmailVerification> {
                           .show();
                     }
                     else if (user.emailVerified){
-                      Mover.move(context, Home());
+                      if (Platform.isIOS) {
+                        Navigator.of(context).pushReplacement(CupertinoPageRoute(builder: (context) => Home(),));
+                      }
+                      else if (Platform.isAndroid) {
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Home(),));
+                      }
+
                     }
 
                   },

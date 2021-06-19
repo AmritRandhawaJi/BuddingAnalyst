@@ -1,10 +1,12 @@
-import 'package:budding_analyst/model/mover.dart';
+import 'dart:io';
+
 import 'package:budding_analyst/screens/forgetScreen.dart';
 import 'package:budding_analyst/screens/loginScreen.dart';
 import 'package:budding_analyst/screens/registerUi.dart';
 import 'package:budding_analyst/widgets/indicator.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'home.dart';
@@ -43,7 +45,13 @@ class _EmailLoginUIState extends State<EmailLoginUI> {
       });
       await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: id, password: pass);
-      Mover.move(context, Home());
+      if (Platform.isIOS) {
+        Navigator.of(context).pushReplacement(CupertinoPageRoute(builder: (context) => Home(),));
+      }
+      else if (Platform.isAndroid) {
+        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Home(),));
+      }
+
     } on FirebaseAuthException catch (e) {
       setState(() {
         buttonState = false;
@@ -75,7 +83,12 @@ class _EmailLoginUIState extends State<EmailLoginUI> {
               children: [
                 TextButton(
                   onPressed: () {
-                    Mover.move(context, LoginScreen());
+                    if (Platform.isIOS) {
+                      Navigator.of(context).pushReplacement(CupertinoPageRoute(builder: (context) => LoginScreen(),));
+                    }
+                    else if (Platform.isAndroid) {
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => LoginScreen(),));
+                    }
                   },
                   child: Icon(
                     Icons.close,
@@ -211,7 +224,12 @@ class _EmailLoginUIState extends State<EmailLoginUI> {
             Text("Don't have an account?"),
             TextButton(
               onPressed: () {
-                Mover.move(context, RegisterUi());
+                if (Platform.isIOS) {
+                  Navigator.of(context).pushReplacement(CupertinoPageRoute(builder: (context) => RegisterUi(),));
+                }
+                else if (Platform.isAndroid) {
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => RegisterUi(),));
+                }
               },
               child: Text("Register",
                   style: TextStyle(fontSize: 14.0)),
@@ -224,7 +242,12 @@ class _EmailLoginUIState extends State<EmailLoginUI> {
                 Text("Trouble logging in?"),
                 TextButton(
                     onPressed: () {
-                      Mover.move(context, ForgetPassword());
+                      if (Platform.isIOS) {
+                        Navigator.of(context).pushReplacement(CupertinoPageRoute(builder: (context) => ForgetPassword(),));
+                      }
+                      else if (Platform.isAndroid) {
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => ForgetPassword(),));
+                      }
                     },
                     child: Text("Forget password"))
               ],

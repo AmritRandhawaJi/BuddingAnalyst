@@ -1,6 +1,9 @@
 import 'dart:async';
-import 'package:budding_analyst/model/mover.dart';
+import 'dart:io';
 import 'package:budding_analyst/model/userStateAuthentication.dart';
+import 'package:budding_analyst/screens/decision.dart';
+import 'package:budding_analyst/screens/phoneOTP.dart';
+import 'package:budding_analyst/widgets/alert.dart';
 import 'package:budding_analyst/widgets/indicator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -19,120 +22,139 @@ class PhoneAuthFirebase extends StatefulWidget {
 
 class _PhoneAuthFirebaseState extends State<PhoneAuthFirebase> {
   late String _verificationCode;
-
   TextEditingController otpController = TextEditingController();
   GlobalKey<FormState> otpKey = GlobalKey();
-
   bool _buttonState = true;
 
   @override
   void initState() {
     _mobileAuthFirebase(widget.number);
-
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
-          body: SafeArea(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Container(
-                    height: MediaQuery.of(context).size.width / 2,
-                    width: MediaQuery.of(context).size.width / 2,
-                    child: Image.asset("assets/mobileHeading.png")),
-
-                Container(
-                  child: Indicator(),
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.white,
+        leading: GestureDetector(
+          child: Icon(
+            Icons.arrow_back_ios,
+            color: Colors.black,
+          ),
+          onTap: () {
+            if (Platform.isIOS) {
+              Navigator.of(context).pushReplacement(CupertinoPageRoute(
+                builder: (context) => Decision(),
+              ));
+            } else if (Platform.isAndroid) {
+              Navigator.of(context).pushReplacement(MaterialPageRoute(
+                builder: (context) => Decision(),
+              ));
+            }
+          },
+        ),
+      ),
+      body: SafeArea(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Container(
+                height: MediaQuery.of(context).size.width / 2,
+                width: MediaQuery.of(context).size.width / 2,
+                child: Image.asset("assets/mobileHeading.png")),
+            Container(
+              child: Indicator(),
+            ),
+            Text("An one time password has been sent"),
+            Text(
+              widget.number,
+              style: TextStyle(color: Colors.black87),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 25, right: 25),
+              child: Form(
+                key: otpKey,
+                child: PinCodeTextField(
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return "Enter otp";
+                    } else if (value.length != 6) {
+                      return "Enter 6 digits otp";
+                    } else {
+                      return null;
+                    }
+                  },
+                  controller: otpController,
+                  keyboardType: TextInputType.number,
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                  appContext: context,
+                  length: 6,
+                  onChanged: (String value) {},
                 ),
-                Text("An one time password has been sent"),
-
-                Text(
-                  widget.number,
-                  style: TextStyle(color: Colors.black87),
-                ),
-
-                Padding(
-                  padding: const EdgeInsets.only(left: 25, right: 25),
-                  child: Form(
-                    key: otpKey,
-                    child: PinCodeTextField(
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return "Enter otp";
-                        } else if (value.length != 6) {
-                          return "Enter 6 digits otp";
-                        } else {
-                          return null;
-                        }
-                      },
-                      controller: otpController,
-                      keyboardType: TextInputType.number,
-                      inputFormatters: [
-                        FilteringTextInputFormatter.digitsOnly
-                      ],
-                      appContext: context,
-                      length: 6,
-                      onChanged: (String value) {},
-                    ),
-                  ),
-                ),
-
-                Center(
-                  child: Container(
-                    child: _buttonState
-                        ? MaterialButton(
-                            onPressed: () async {
-                              if (otpKey.currentState!.validate()) {
-                                _signInManual();
-                                setState(() {
-                                  _buttonState = false;
-                                });
-                              }
-                            },
-                            height: 50,
-                            color: Colors.black,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10)),
-                            child: Text(
-                              "Proceed",
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          )
-                        : MaterialButton(
-                            onPressed: () {},
-                            height: 50,
-                            color: Colors.grey,
-                            disabledTextColor: Colors.white,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10)),
-                            child: Text(
-                              "Proceed",
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ),
-                  ),
-                ),
-
-                Column(
-                  children: [
-                    Text("Didn't get code?",
-                        style: TextStyle(color: Colors.black)),
-                    TextButton(
-                        onPressed: () {
-                          _mobileAuthFirebase(widget.number);
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text("OTP Resend")));
+              ),
+            ),
+            Center(
+              child: Container(
+                child: _buttonState
+                    ? MaterialButton(
+                        onPressed: () async {
+                          if (otpKey.currentState!.validate()) {
+                            _signInManual();
+                            setState(() {
+                              _buttonState = false;
+                            });
+                          }
                         },
-                        child: Text("Resend"))
-                  ],
-                ),
+                        height: 50,
+                        color: Colors.black,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10)),
+                        child: Text(
+                          "Proceed",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      )
+                    : MaterialButton(
+                        onPressed: () {},
+                        height: 50,
+                        color: Colors.grey,
+                        disabledTextColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10)),
+                        child: Text(
+                          "Proceed",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+              ),
+            ),
+            Column(
+              children: [
+                Text("Didn't get code?", style: TextStyle(color: Colors.black)),
+                TextButton(
+                    onPressed: () {
+                      _mobileAuthFirebase(widget.number);
+                      ScaffoldMessenger.of(context)
+                          .showSnackBar(SnackBar(content: Text("OTP Resend")));
+                    },
+                    child: Text("Resend"))
               ],
             ),
-          ),
-        );
+            TextButton(
+                onPressed: () {
+                  Alerts("Write your concern at Helpdesk@Buddinganalyst.com",
+                          "Customer support", context)
+                      .show();
+                },
+                child: Text("Need help?"))
+          ],
+        ),
+      ),
+    );
   }
 
   Future<void> _mobileAuthFirebase(String number) async {
@@ -159,7 +181,13 @@ class _PhoneAuthFirebaseState extends State<PhoneAuthFirebase> {
       setState(() {
         _buttonState = false;
       });
-      Mover.move(context, UserStateAuthentication());
+      if (Platform.isIOS) {
+        Navigator.of(context).pushReplacement(CupertinoPageRoute(builder: (context) => UserStateAuthentication(),));
+      }
+      else if (Platform.isAndroid) {
+        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => UserStateAuthentication(),));
+      }
+
     } on FirebaseAuthException catch (e) {
       setState(() {
         _buttonState = true;
@@ -177,7 +205,13 @@ class _PhoneAuthFirebaseState extends State<PhoneAuthFirebase> {
         _buttonState = false;
       });
       await FirebaseAuth.instance.signInWithCredential(phoneAuth);
-      Mover.move(context, UserStateAuthentication());
+      if (Platform.isIOS) {
+        Navigator.of(context).pushReplacement(CupertinoPageRoute(builder: (context) => UserStateAuthentication(),));
+      }
+      else if (Platform.isAndroid) {
+        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => UserStateAuthentication(),));
+      }
+
     } on FirebaseAuthException catch (e) {
       setState(() {
         _buttonState = true;
@@ -186,4 +220,5 @@ class _PhoneAuthFirebaseState extends State<PhoneAuthFirebase> {
           duration: Duration(seconds: 5), content: Text(e.message.toString())));
     }
   }
+
 }

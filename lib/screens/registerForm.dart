@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:budding_analyst/model/mover.dart';
 import 'package:budding_analyst/model/registerFormData.dart';
 import 'package:budding_analyst/screens/emailVerification.dart';
 import 'package:budding_analyst/widgets/indicator.dart';
@@ -17,11 +16,10 @@ class RegisterForm extends StatefulWidget {
 class _RegisterFormState extends State<RegisterForm> {
   User user = FirebaseAuth.instance.currentUser!;
 
-  TextEditingController firstNameController = TextEditingController();
-  TextEditingController lastNameController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
 
-  GlobalKey<FormState> firstNameKey = GlobalKey<FormState>();
-  GlobalKey<FormState> lastNameKey = GlobalKey<FormState>();
+  GlobalKey<FormState> nameKey = GlobalKey<FormState>();
+
   GlobalKey<FormState> ageKey = GlobalKey<FormState>();
 
   var _age;
@@ -38,8 +36,7 @@ class _RegisterFormState extends State<RegisterForm> {
   @override
   void dispose() {
     FirebaseFirestore.instance.terminate();
-    firstNameController.dispose();
-    lastNameController.dispose();
+    nameController.dispose();
     super.dispose();
   }
 
@@ -60,90 +57,39 @@ class _RegisterFormState extends State<RegisterForm> {
                   ),
                   Container(
                     child: Image.asset("assets/formHeading.png"),
-                    width: 60.w,
-                    height: 30.h,
+                    width: deviceType == DeviceType.tablet ? MediaQuery.of(context).size.width/1.5 : MediaQuery.of(context).size.width/2,
+                    height: MediaQuery.of(context).size.height/4 ,
                   ),
                   Text(
                     "What's your name?",
                     style: TextStyle(color: Colors.blue),
                   ),
-                  Container(
-                    width: MediaQuery.of(context).size.width/2,
-                    child: Column(
-                      children: [
-                        Form(
-                          key: firstNameKey,
-                          child: TextFormField(
-                            keyboardType: TextInputType.name,
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return "Enter first name";
-                              } else {
-                                return null;
-                              }
-                            },
-                            autofillHints: [AutofillHints.name],
-                            controller: firstNameController,
-                            decoration: InputDecoration(
-                                border: OutlineInputBorder(),
-                                filled: true,
-                                fillColor: Colors.white,
-                                hintStyle: TextStyle(color: Colors.black),
-                                labelText: "First Name",
-                                labelStyle: TextStyle(color: Colors.black)),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Form(
-                          key: lastNameKey,
-                          child: TextFormField(
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return "Enter last name";
-                              } else {
-                                return null;
-                              }
-                            },
-                            controller: lastNameController,
-                            decoration: InputDecoration(
-                                border: OutlineInputBorder(),
-                                filled: true,
-                                fillColor: Colors.white,
-                                hintStyle: TextStyle(color: Colors.black),
-                                labelText: "Last Name",
-                                labelStyle: TextStyle(color: Colors.black)),
-                          ),
-                        ),
-                      ],
+                  Padding(
+                    padding: const EdgeInsets.only(left: 20,right: 20),
+                    child: Form(
+                      key: nameKey,
+                      child: TextFormField(
+                        keyboardType: TextInputType.name,
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return "Enter your name";
+                          } else {
+                            return null;
+                          }
+                        },
+                        autofillHints: [AutofillHints.name],
+                        controller: nameController,
+                        decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            filled: true,
+                            fillColor: Colors.white,
+                            hintStyle: TextStyle(color: Colors.black),
+                            labelText: "Full Name",
+                            labelStyle: TextStyle(color: Colors.black)),
+                      ),
                     ),
                   ),
 
-                  ListTile(
-                    title: const Text('Male'),
-                    leading: Radio(
-                      value: "Male",
-                      groupValue: _gender,
-                      onChanged: (value) {
-                        setState(() {
-                          _gender = value.toString();
-                        });
-                      },
-                    ),
-                  ),
-                  ListTile(
-                    title: const Text('Female'),
-                    leading: Radio(
-                      value: "Female",
-                      groupValue: _gender,
-                      onChanged: (value) {
-                        setState(() {
-                          _gender = value.toString();
-                        });
-                      },
-                    ),
-                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -160,18 +106,27 @@ class _RegisterFormState extends State<RegisterForm> {
                   Container(
                     width: MediaQuery.of(context).size.width/4,
                     child: Platform.isIOS
-                        ? CupertinoPicker(
-                            itemExtent: 30,
-                            onSelectedItemChanged: (value) {
-                              int data = value + 18;
-                              setState(() {
-                                _age = data;
-                              });
-                            },
-                            children: [
-                                for (int i = 18; i <= 70; i++) Text("$i"),
-                              ])
-                        : Form(
+                        ? Container(
+                      decoration: BoxDecoration(
+                        color: Colors.black,
+                        borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                      child: TextButton(onPressed: () async {
+                        await showModalBottomSheet(context: context,isDismissible: true, builder: (context) {
+                          return CupertinoPicker(
+                              itemExtent: 30,  onSelectedItemChanged: (value) {
+                            int data = value + 18;
+                            setState(() {
+                              _age = data;
+                            });
+                          },
+                              children: [
+                                for (int i = 18; i <= 70; i++) Text("$i",style: TextStyle(fontSize: 24),),
+                              ]);
+                        },);
+                      }, child: Text(_age.toString(),style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),),
+                    )
+
+                     : Form(
                             key: ageKey,
                             child: DropdownButtonFormField<String>(
                               validator: (value) {
@@ -207,11 +162,35 @@ class _RegisterFormState extends State<RegisterForm> {
                               ),
                             ),
                           ),
+
+                  ),
+                  ListTile(
+                    title: const Text('Male'),
+                    leading: Radio(
+                      value: "Male",
+                      groupValue: _gender,
+                      onChanged: (value) {
+                        setState(() {
+                          _gender = value.toString();
+                        });
+                      },
+                    ),
+                  ),
+                  ListTile(
+                    title: const Text('Female'),
+                    leading: Radio(
+                      value: "Female",
+                      groupValue: _gender,
+                      onChanged: (value) {
+                        setState(() {
+                          _gender = value.toString();
+                        });
+                      },
+                    ),
                   ),
                   MaterialButton(
                     onPressed: () {
-                      if (firstNameKey.currentState!.validate() &
-                          lastNameKey.currentState!.validate() &
+                      if (nameKey.currentState!.validate() &
                           ageKey.currentState!.validate()) {
                         _createDatabase();
                       }
@@ -239,13 +218,22 @@ class _RegisterFormState extends State<RegisterForm> {
       loading = true;
     });
     FirebaseFirestore.instance.collection("users").doc(user.uid).set({
-      "first name": firstNameController.value.text,
-      "last name": lastNameController.value.text,
+      "first name": nameController.value.text,
       "email": user.email,
       "age": _age,
       "gender": _gender,
       "registration": DateTime.now()
     }, SetOptions(merge: true)).then(
-        (value) => {Mover.move(context, EmailVerification())});
+        (value) => {
+        if (Platform.isIOS) {
+        Navigator.of(context).pushReplacement(CupertinoPageRoute(builder: (context) => EmailVerification(),))
   }
+    else if (Platform.isAndroid) {
+    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => EmailVerification(),))
+    }
+
+  });
+  }
+
+
 }

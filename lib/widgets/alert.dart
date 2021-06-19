@@ -14,13 +14,13 @@ class Alerts{
 
   void show(){
     if(Platform.isIOS){
-      showCupertinoDialog(context: context, builder: (context) => alert(),barrierDismissible: false);
+      showCupertinoDialog(context: context, builder: (context) => _alert(),barrierDismissible: true);
     }if(Platform.isAndroid){
-      showDialog(context: context, builder: (context) => alert(),barrierDismissible: false);
+      showDialog(context: context, builder: (context) => _alert(),barrierDismissible: false);
     }
   }
 
-  Widget alert(){
+  Widget _alert(){
     return Platform.isIOS ? CupertinoAlertDialog(
       content: Text(content),
       title: Text(title),

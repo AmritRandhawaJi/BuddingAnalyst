@@ -1,4 +1,4 @@
-import 'package:budding_analyst/model/mover.dart';
+import 'dart:io';
 import 'package:budding_analyst/screens/home.dart';
 import 'package:budding_analyst/screens/loginScreen.dart';
 import 'package:budding_analyst/screens/registerUi.dart';
@@ -40,7 +40,12 @@ class _DecisionState extends State<Decision> {
                     flex: 1,
                     child: TextButton(
                         onPressed: () async {
-                          Mover.move(context, Home());
+                          if (Platform.isIOS) {
+                            Navigator.of(context).pushReplacement(CupertinoPageRoute(builder: (context) => Home(),));
+                          }
+                          else if (Platform.isAndroid) {
+                            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Home(),));
+                          }
                         },
                         child: Text(
                           "Skip"
@@ -83,8 +88,14 @@ class _DecisionState extends State<Decision> {
                     Expanded(
                       child: MaterialButton(
                         onPressed: () {
+                          if (Platform.isIOS) {
+                            Navigator.of(context).pushReplacement(CupertinoPageRoute(builder: (context) => LoginScreen(),));
+                          }
+                          else if (Platform.isAndroid) {
+                            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => LoginScreen(),));
+                          }
 
-                          Mover.move(context, LoginScreen());
+
                         },
                         height: deviceType == DeviceType.tablet ? 60 :50,
                         child: Text(
@@ -99,7 +110,14 @@ class _DecisionState extends State<Decision> {
                     Expanded(
                       child: MaterialButton(
                         onPressed: () {
-                          Mover.move(context, RegisterUi());
+                          if (Platform.isIOS) {
+                            Navigator.of(context).pushReplacement(CupertinoPageRoute(builder: (context) => RegisterUi(),));
+                          }
+                          else if (Platform.isAndroid) {
+                            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => RegisterUi(),));
+                          }
+
+
                         },
                         child: Text(
                           "Register",

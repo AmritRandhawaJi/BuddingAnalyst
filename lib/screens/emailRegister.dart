@@ -1,4 +1,5 @@
-import 'package:budding_analyst/model/mover.dart';
+import 'dart:io';
+
 import 'package:budding_analyst/screens/registerUi.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -43,7 +44,13 @@ class _EmailRegisterState extends State<EmailRegister> {
       });
       await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: id, password: pass);
-      Mover.move(context, RegisterForm());
+      if (Platform.isIOS) {
+        Navigator.of(context).pushReplacement(CupertinoPageRoute(builder: (context) => RegisterForm(),));
+      }
+      else if (Platform.isAndroid) {
+        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => RegisterForm(),));
+      }
+
     } on FirebaseAuthException catch (e) {
       setState(() {
         buttonState = false;
@@ -87,7 +94,13 @@ class _EmailRegisterState extends State<EmailRegister> {
                   children: [
                     TextButton(
                       onPressed: () {
-                        Mover.move(context, RegisterUi());
+                        if (Platform.isIOS) {
+                          Navigator.of(context).pushReplacement(CupertinoPageRoute(builder: (context) => RegisterUi(),));
+                        }
+                        else if (Platform.isAndroid) {
+                          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => RegisterUi(),));
+                        }
+
                       },
                       child: Icon(
                         Icons.close,
@@ -225,7 +238,12 @@ class _EmailRegisterState extends State<EmailRegister> {
                       borderRadius: BorderRadius.circular(8.0)),
                   color: Colors.white,
                   onPressed: () {
-                    Mover.move(context, LoginScreen());
+                    if (Platform.isIOS) {
+                      Navigator.of(context).pushReplacement(CupertinoPageRoute(builder: (context) => LoginScreen(),));
+                    }
+                    else if (Platform.isAndroid) {
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => LoginScreen(),));
+                    }
                   },
                   child: Text("Login",
                       style:

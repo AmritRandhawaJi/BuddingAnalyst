@@ -1,5 +1,6 @@
+import 'dart:io';
+
 import 'package:budding_analyst/assets/my_flutter_app_icons.dart';
-import 'package:budding_analyst/model/mover.dart';
 import 'package:budding_analyst/model/networkState.dart';
 import 'package:budding_analyst/screens/emailRegister.dart';
 import 'package:budding_analyst/screens/loginScreen.dart';
@@ -44,7 +45,12 @@ class _RegisterUiState extends State<RegisterUi> {
                       onPressed: () async {
                         await NetworkState.state();
                         if (NetworkState.status()) {
-                          Mover.move(context, EmailRegister());
+                          if (Platform.isIOS) {
+                            Navigator.of(context).pushReplacement(CupertinoPageRoute(builder: (context) => EmailRegister(),));
+                          }
+                          else if (Platform.isAndroid) {
+                            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => EmailRegister(),));
+                          }
                         } else {
                           InternetError(context).show();
                         }
@@ -66,7 +72,12 @@ class _RegisterUiState extends State<RegisterUi> {
                       onPressed: () async {
                         await NetworkState.state();
                         if (NetworkState.status()) {
-                          Mover.move(context, MobileAuthentication());
+                          if (Platform.isIOS) {
+                            Navigator.of(context).pushReplacement(CupertinoPageRoute(builder: (context) => MobileAuthentication(),));
+                          }
+                          else if (Platform.isAndroid) {
+                            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => MobileAuthentication(),));
+                          }
                         } else {
                           InternetError(context).show();
                         }
@@ -165,7 +176,12 @@ class _RegisterUiState extends State<RegisterUi> {
                           child: Text("Already have an account?",style: TextStyle(color: Colors.black)),
                         ),
                         TextButton(onPressed: (){
-                          Mover.move(context, LoginScreen());
+                          if (Platform.isIOS) {
+                            Navigator.of(context).pushReplacement(CupertinoPageRoute(builder: (context) => LoginScreen(),));
+                          }
+                          else if (Platform.isAndroid) {
+                            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => LoginScreen(),));
+                          }
                         }, child: Text("Login"))
                       ],
                     ),

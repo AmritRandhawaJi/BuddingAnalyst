@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:budding_analyst/model/PageViewData.dart';
 import 'package:budding_analyst/model/SlideItem.dart';
-import 'package:budding_analyst/model/mover.dart';
 import 'package:budding_analyst/model/networkState.dart';
 import 'package:budding_analyst/screens/decision.dart';
 import 'package:budding_analyst/widgets/SlideDots.dart';
@@ -133,7 +132,13 @@ class _GettingStartedScreenState extends State<GettingStartedScreen> {
                           if (NetworkState.status()) {
                             final data = await SharedPreferences.getInstance();
                             data.setInt("userState", 1);
-                            Mover.move(context, Decision());
+                            if (Platform.isIOS) {
+                              Navigator.of(context).pushReplacement(CupertinoPageRoute(builder: (context) => Decision(),));
+                            }
+                            else if (Platform.isAndroid) {
+                              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Decision(),));
+                            }
+
                           } else {
                             InternetError(context).show();
                           }

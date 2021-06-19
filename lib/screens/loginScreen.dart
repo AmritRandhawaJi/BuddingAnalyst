@@ -1,9 +1,9 @@
 
+import 'dart:io';
+
 import 'package:budding_analyst/assets/my_flutter_app_icons.dart';
-import 'package:budding_analyst/model/mover.dart';
 import 'package:budding_analyst/model/networkState.dart';
 import 'package:budding_analyst/screens/emailLoginUi.dart';
-import 'package:budding_analyst/screens/emailRegister.dart';
 import 'package:budding_analyst/screens/phoneOTP.dart';
 import 'package:budding_analyst/screens/registerUi.dart';
 import 'package:budding_analyst/widgets/internetAlert.dart';
@@ -53,7 +53,13 @@ class _LoginScreenState extends State<LoginScreen> {
                 onPressed: () async {
                   await NetworkState.state();
                   if (NetworkState.status()) {
-                    Mover.move(context,EmailLoginUI());
+                    if (Platform.isIOS) {
+                      Navigator.of(context).pushReplacement(CupertinoPageRoute(builder: (context) => EmailLoginUI(),));
+                    }
+                    else if (Platform.isAndroid) {
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => EmailLoginUI(),));
+                    }
+
                   } else {
                     InternetError(context).show();
                   }
@@ -75,7 +81,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 onPressed: () async {
                   await NetworkState.state();
                   if (NetworkState.status()) {
-                    Mover.move(context,MobileAuthentication());
+                    if (Platform.isIOS) {
+                      Navigator.of(context).pushReplacement(CupertinoPageRoute(builder: (context) => MobileAuthentication(),));
+                    }
+                    else if (Platform.isAndroid) {
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => MobileAuthentication(),));
+                    }
                   } else {
                     InternetError(context).show();
                   }
@@ -149,7 +160,13 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   TextButton(
                       onPressed: () {
-                     Mover.move(context,RegisterUi());
+                        if (Platform.isIOS) {
+                          Navigator.of(context).pushReplacement(CupertinoPageRoute(builder: (context) => RegisterUi(),));
+                        }
+                        else if (Platform.isAndroid) {
+                          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => RegisterUi(),));
+                        }
+
                       },
                       child: Text("Register"))
                 ],
