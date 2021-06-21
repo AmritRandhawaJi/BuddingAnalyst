@@ -1,4 +1,3 @@
-
 import 'dart:io';
 
 import 'package:budding_analyst/assets/my_flutter_app_icons.dart';
@@ -19,46 +18,41 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        body: Column(
+    return Scaffold(
+      appBar: AppBar(
+        title:     Center(
+            child: Text(
+              "Welcome",
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 48,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: "Ubuntu"),
+            )),
+        backgroundColor: Colors.black,
+        toolbarHeight: MediaQuery.of(context).size.height / 3.5,
+        elevation: 0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only( bottomLeft: Radius.circular(100))
+        ),
+      ),
+      body: SafeArea(
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            ClipPath(
-              clipper: MyPainter(),
-              child: Container(
-                  color: Colors.black,
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height / 3,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Center(
-                          child: Text(
-                        "Welcome",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 48,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: "Ubuntu"),
-                      )),
-                    ],
-                  )),
-            ),
-            SizedBox(
-              height: 50,
-            ),
             MaterialButton(
               onPressed: () async {
                 await NetworkState.state();
                 if (NetworkState.status()) {
                   if (Platform.isIOS) {
-                    Navigator.of(context).pushReplacement(CupertinoPageRoute(builder: (context) => EmailLoginUI(),));
+                    Navigator.of(context).pushReplacement(CupertinoPageRoute(
+                      builder: (context) => EmailLoginUI(),
+                    ));
+                  } else if (Platform.isAndroid) {
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (context) => EmailLoginUI(),
+                    ));
                   }
-                  else if (Platform.isAndroid) {
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => EmailLoginUI(),));
-                  }
-
                 } else {
                   InternetError(context).show();
                 }
@@ -73,18 +67,18 @@ class _LoginScreenState extends State<LoginScreen> {
               minWidth: MediaQuery.of(context).size.width / 1.2,
               height: 50,
             ),
-            SizedBox(
-              height: 10,
-            ),
             MaterialButton(
               onPressed: () async {
                 await NetworkState.state();
                 if (NetworkState.status()) {
                   if (Platform.isIOS) {
-                    Navigator.of(context).pushReplacement(CupertinoPageRoute(builder: (context) => MobileAuthentication(),));
-                  }
-                  else if (Platform.isAndroid) {
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => MobileAuthentication(),));
+                    Navigator.of(context).pushReplacement(CupertinoPageRoute(
+                      builder: (context) => MobileAuthentication(),
+                    ));
+                  } else if (Platform.isAndroid) {
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (context) => MobileAuthentication(),
+                    ));
                   }
                 } else {
                   InternetError(context).show();
@@ -110,7 +104,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     )),
               ),
               Text("OR"),
-
               Expanded(
                 child: Container(
                     margin: const EdgeInsets.only(left: 15.0, right: 10.0),
@@ -147,9 +140,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ],
             ),
-            SizedBox(
-              height: 20.0,
-            ),
             Column(
               children: [
                 Padding(
@@ -160,12 +150,15 @@ class _LoginScreenState extends State<LoginScreen> {
                 TextButton(
                     onPressed: () {
                       if (Platform.isIOS) {
-                        Navigator.of(context).pushReplacement(CupertinoPageRoute(builder: (context) => RegisterUi(),));
+                        Navigator.of(context)
+                            .pushReplacement(CupertinoPageRoute(
+                          builder: (context) => RegisterUi(),
+                        ));
+                      } else if (Platform.isAndroid) {
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          builder: (context) => RegisterUi(),
+                        ));
                       }
-                      else if (Platform.isAndroid) {
-                        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => RegisterUi(),));
-                      }
-
                     },
                     child: Text("Register"))
               ],
@@ -174,25 +167,5 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
-  }
-}
-
- class MyPainter extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    var path = Path();
-    path.lineTo(0, size.height - 70);
-    var controlPoint = Offset(50, size.height);
-    var endPoint = Offset(size.width / 2, size.height);
-    path.quadraticBezierTo(
-        controlPoint.dx, controlPoint.dy, endPoint.dx, endPoint.dy);
-    path.lineTo(size.width, size.height);
-    path.lineTo(size.width, 0);
-    return path;
-  }
-
-  @override
-  bool shouldReclip(covariant CustomClipper<Path> oldClipper) {
-    return true;
   }
 }

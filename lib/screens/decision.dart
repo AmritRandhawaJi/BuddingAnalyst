@@ -19,7 +19,6 @@ class _DecisionState extends State<Decision> {
   Widget build(BuildContext context) {
     return Sizer(
       builder: (context, orientation, deviceType) => Scaffold(
-        backgroundColor: Colors.white,
         body: SafeArea(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -31,8 +30,10 @@ class _DecisionState extends State<Decision> {
                     flex: 3,
                     child: Column(
                       children: [
-                        Center(child: Text("Budding",style: TextStyle(fontSize: deviceType == DeviceType.tablet ? 40 :32,fontFamily: "Trocchi"),)),
-                        Center(child: Text("Analyst",style: TextStyle(fontSize: deviceType == DeviceType.tablet ? 38 :30,fontFamily: "Trocchi"),))
+
+                        Image.asset("assets/heading.png",width: MediaQuery.of(context).size.width/2,
+                          height: MediaQuery.of(context).size.height/4,),
+
                       ],
                     ),
                   ),

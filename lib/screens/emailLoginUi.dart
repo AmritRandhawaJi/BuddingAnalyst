@@ -76,10 +76,13 @@ class _EmailLoginUIState extends State<EmailLoginUI> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 TextButton(
                   onPressed: () {
@@ -95,8 +98,11 @@ class _EmailLoginUIState extends State<EmailLoginUI> {
                     color: Colors.black,
                   ),
                 ),
+                Image.asset("assets/login.png",width: MediaQuery.of(context).size.width / 1.5,
+                  height: MediaQuery.of(context).size.height / 3.5,),
               ],
             ),
+            Text("Login your account with secured server.",style: TextStyle(fontFamily: "Ubuntu"),),
             Form(
               key: stateKey,
               child: Padding(
@@ -133,9 +139,6 @@ class _EmailLoginUIState extends State<EmailLoginUI> {
                       labelStyle: TextStyle(color: Colors.black)),
                 ),
               ),
-            ),
-            SizedBox(
-              height: 25.0,
             ),
             Form(
               key: stateKey2,
@@ -187,14 +190,8 @@ class _EmailLoginUIState extends State<EmailLoginUI> {
                 ),
               ),
             ),
-            SizedBox(
-              height: 10.0,
-            ),
             Container(
               child: buttonState ? Indicator() : null,
-            ),
-            SizedBox(
-              height: 10.0,
             ),
             MaterialButton(
               onPressed: buttonState
@@ -218,24 +215,23 @@ class _EmailLoginUIState extends State<EmailLoginUI> {
               height: 40.0,
               minWidth: MediaQuery.of(context).size.width / 2,
             ),
-            SizedBox(
-              height: 10.0,
-            ),
-            Text("Don't have an account?"),
-            TextButton(
-              onPressed: () {
-                if (Platform.isIOS) {
-                  Navigator.of(context).pushReplacement(CupertinoPageRoute(builder: (context) => RegisterUi(),));
-                }
-                else if (Platform.isAndroid) {
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => RegisterUi(),));
-                }
-              },
-              child: Text("Register",
-                  style: TextStyle(fontSize: 14.0)),
-            ),
-            SizedBox(
-              height: 30.0,
+            Column(
+              children: [
+
+                Text("Don't have an account?"),
+                TextButton(
+                  onPressed: () {
+                    if (Platform.isIOS) {
+                      Navigator.of(context).pushReplacement(CupertinoPageRoute(builder: (context) => RegisterUi(),));
+                    }
+                    else if (Platform.isAndroid) {
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => RegisterUi(),));
+                    }
+                  },
+                  child: Text("Register",
+                      style: TextStyle(fontSize: 14.0)),
+                ),
+              ],
             ),
             Column(
               children: [

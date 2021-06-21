@@ -1,7 +1,6 @@
 import 'dart:io';
-
 import 'package:budding_analyst/screens/decision.dart';
-import 'package:budding_analyst/screens/loginScreen.dart';
+import 'package:budding_analyst/screens/emailLoginUi.dart';
 import 'package:budding_analyst/widgets/alert.dart';
 import 'package:budding_analyst/widgets/indicator.dart';
 import 'package:email_validator/email_validator.dart';
@@ -25,7 +24,6 @@ class _ForgetPasswordState extends State<ForgetPassword> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.blueGrey,
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -50,11 +48,8 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                     color: Colors.black,
                   ),
                 ),
-                Container(
-                  child: Image.asset("assets/headingWhite.png"),
-                  width: MediaQuery.of(context).size.width / 1.5,
-                  height: MediaQuery.of(context).size.height / 3.5,
-                ),
+                   Image.asset("assets/forget.png",width: MediaQuery.of(context).size.width / 1.5,
+                    height: MediaQuery.of(context).size.height / 3.5,),
               ],
             ),
             Form(
@@ -97,7 +92,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                 child: Text(
                   "Forget password? don't worry we'll assist you.",
                   style: TextStyle(
-                      color: Colors.white,
+
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                       fontFamily: "Ubuntu"),
@@ -120,22 +115,20 @@ class _ForgetPasswordState extends State<ForgetPassword> {
               ),
               color: Colors.black,
             ),
-            CupertinoButton(child: Text("Login",style: TextStyle(color: Colors.black),), onPressed: (){
+            CupertinoButton(child: Text("Login",style: TextStyle(color: Colors.white),), onPressed: (){
               if (Platform.isIOS) {
                 Navigator.of(context).pushReplacement(
-                    CupertinoPageRoute(builder: (context) => LoginScreen(),));
+                    CupertinoPageRoute(builder: (context) => EmailLoginUI(),));
               }
               else if (Platform.isAndroid) {
                 Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => LoginScreen(),));
+                    MaterialPageRoute(builder: (context) => EmailLoginUI(),));
               }
-
-            },color: Colors.white,),
+            },color: Colors.black,),
             Column(
               children: [
                 Text(
                   "Need more help?",
-                  style: TextStyle(color: Colors.white),
                 ),
                 TextButton(
                     onPressed: () {
@@ -147,7 +140,6 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                     },
                     child: Text("Customer support",
                         style: TextStyle(
-                            color: Colors.white,
                             fontSize: 18,
                             fontFamily: "Ubuntu")))
               ],
