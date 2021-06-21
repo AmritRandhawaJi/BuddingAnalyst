@@ -1,11 +1,14 @@
 import 'dart:io';
 
 import 'package:budding_analyst/screens/decision.dart';
+import 'package:budding_analyst/screens/loginScreen.dart';
 import 'package:budding_analyst/widgets/alert.dart';
+import 'package:budding_analyst/widgets/indicator.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class ForgetPassword extends StatefulWidget {
   @override
@@ -16,7 +19,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
   TextEditingController emailController = TextEditingController();
   GlobalKey<FormState> stateKey = GlobalKey();
 
-  bool buttonState = false;
+  bool _loading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +31,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 TextButton(
                   onPressed: () {
@@ -46,12 +50,12 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                     color: Colors.black,
                   ),
                 ),
+                Container(
+                  child: Image.asset("assets/headingWhite.png"),
+                  width: MediaQuery.of(context).size.width / 1.5,
+                  height: MediaQuery.of(context).size.height / 3.5,
+                ),
               ],
-            ),
-            Container(
-              child: Image.asset("assets/headingWhite.png"),
-              width: MediaQuery.of(context).size.width / 1.5,
-              height: MediaQuery.of(context).size.height / 3.5,
             ),
             Form(
               key: stateKey,
@@ -64,11 +68,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                       return "Email is required";
                     } else if (!EmailValidator.validate(email)) {
                       return "Email invalid";
-                    }
-                    // else if (emailResult) {
-                    //   return "No user found";
-                    // }
-                    else {
+                    } else {
                       return null;
                     }
                   },
@@ -92,7 +92,6 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                 ),
               ),
             ),
-
             Container(
                 width: MediaQuery.of(context).size.width / 1.5,
                 child: Text(
@@ -103,53 +102,82 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                       fontWeight: FontWeight.bold,
                       fontFamily: "Ubuntu"),
                 )),
-
-            MaterialButton(
-              onPressed: buttonState
-                  ? null
-                  : () async {
-                      if (stateKey.currentState!.validate()) {
-                        setState(() {
-                          buttonState = false;
-                        });
-                        FirebaseAuth.instance.sendPasswordResetEmail(email: emailController.text);
-                       Alerts("We have sent an email please follow steps to reset password.","Email Reset",context).show();
-
-                      }
-                    },
+            Container(
+              child: _loading ? Indicator() : null,
+            ),
+            CupertinoButton(
+              onPressed: () {
+                if (stateKey.currentState!.validate()) {
+                  setState(() {
+                    _loading = true;
+                  });
+                  _validation();
+                }
+              },
               child: Text(
-                "Login",
+                "Reset",
                 style: TextStyle(color: Colors.white),
               ),
               color: Colors.black,
-              elevation: 5,
-              disabledColor: Colors.grey,
-              disabledTextColor: Colors.black,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8.0)),
-              height: 40.0,
-              minWidth: MediaQuery.of(context).size.width / 2,
             ),
-            Text(
-              "Need more help?",
-              style: TextStyle(color: Colors.white),
+            CupertinoButton(child: Text("Login",style: TextStyle(color: Colors.black),), onPressed: (){
+              if (Platform.isIOS) {
+                Navigator.of(context).pushReplacement(
+                    CupertinoPageRoute(builder: (context) => LoginScreen(),));
+              }
+              else if (Platform.isAndroid) {
+                Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (context) => LoginScreen(),));
+              }
+
+            },color: Colors.white,),
+            Column(
+              children: [
+                Text(
+                  "Need more help?",
+                  style: TextStyle(color: Colors.white),
+                ),
+                TextButton(
+                    onPressed: () {
+                      Alerts(
+                        "Write your concern at Helpdesk@buddinganalyst.com",
+                        "Customer Support",
+                        context,
+                      ).show();
+                    },
+                    child: Text("Customer support",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontFamily: "Ubuntu")))
+              ],
             ),
-            TextButton(
-                onPressed: () {
-                  Alerts(
-                    "Write your concern at Helpdesk@buddinganalyst.com",
-                    "Customer Support",
-                    context,
-                  ).show();
-                },
-                child: Text("Customer support",
-                    style: TextStyle(color: Colors.white)))
           ],
         ),
       ),
     );
   }
-  _userAvailability(){
 
+  void _validation() async {
+
+    bool _error = false;
+    await FirebaseAuth.instance
+        .sendPasswordResetEmail(email: emailController.text)
+        .catchError((e) {
+      _error = true;
+    });
+
+    if (_error) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text("User not found or may deleted"),
+      ));
+      setState(() {
+_loading = false;
+      });
+    } else if (!_error) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text("Password reset email has been sent"),
+      ));
+    }
   }
 }

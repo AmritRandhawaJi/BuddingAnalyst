@@ -138,7 +138,6 @@ class _GettingStartedScreenState extends State<GettingStartedScreen> {
                             else if (Platform.isAndroid) {
                               Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Decision(),));
                             }
-
                           } else {
                             InternetError(context).show();
                           }

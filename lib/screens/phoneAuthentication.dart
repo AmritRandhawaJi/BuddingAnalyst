@@ -1,8 +1,6 @@
-import 'dart:async';
 import 'dart:io';
 import 'package:budding_analyst/model/userStateAuthentication.dart';
 import 'package:budding_analyst/screens/decision.dart';
-import 'package:budding_analyst/screens/phoneOTP.dart';
 import 'package:budding_analyst/widgets/alert.dart';
 import 'package:budding_analyst/widgets/indicator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
